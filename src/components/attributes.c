@@ -1,3 +1,4 @@
+#include <math.h>
 #include <raylib.h>
 #include <stdio.h>
 
@@ -23,7 +24,7 @@
 
 void drawAttributeInput(
 	const char *label,
-	uint8_t *attribute,
+	Attribute *attribute,
 	const uint8_t i,
 	const bool isMousePressed,
 	const Vector2 mousePosition
@@ -37,13 +38,21 @@ void drawAttributeInput(
 			decrementColour = BLACK;
 
 			if (isMousePressed) {
-				--*attribute;
+				--attribute->value;
+				// Divide with floor (default is to round towards 0)
+				const int8_t a = attribute->value - 10;
+				const uint8_t b = 2;
+				attribute->modifier = a / b - (a % b != 0 && (a ^ b) < 0);
 			}
 		} else if (mousePosition.x >= BUTTON_INC_X1 && mousePosition.x <= BUTTON_INC_X2) {
 			incrementColour = BLACK;
 
 			if (isMousePressed) {
-				++*attribute;
+				++attribute->value;
+				// Divide with floor (default is to round towards 0)
+				const int8_t a = attribute->value - 10;
+				const uint8_t b = 2;
+				attribute->modifier = a / b - (a % b != 0 && (a ^ b) < 0);
 			}
 		}
 	}
@@ -52,11 +61,13 @@ void drawAttributeInput(
 	DrawRectangle(BUTTON_DEC_X1, y, ARROW_WIDTH, LABEL_ROW_HEIGHT, decrementColour);
 	DrawRectangle(INPUT_X, y, INPUT_WIDTH, LABEL_ROW_HEIGHT, BLACK);
 	DrawRectangle(BUTTON_INC_X1, y, ARROW_WIDTH, LABEL_ROW_HEIGHT, incrementColour);
-	char buf[3];
-	snprintf(buf, 3, "%d", *attribute);
+	char buf[4];
+	snprintf(buf, 3, "%d", attribute->value);
 	// TODO one day: cache this?
 	const uint8_t w = MeasureText(buf, FONT_SIZE) >> 2;
-	DrawText(buf,INPUT_X + INPUT_WIDTH_HALVED - w, y + PADDING,FONT_SIZE,WHITE);
+	DrawText(buf, INPUT_X + INPUT_WIDTH_HALVED - w, y + PADDING, FONT_SIZE, WHITE);
+	snprintf(buf, 4, "%s%d", attribute->modifier >= 0 ? "+" : "", attribute->modifier);
+	DrawText(buf, BUTTON_INC_X1 + ARROW_WIDTH + 8, y + PADDING, FONT_SIZE, BLACK);
 }
 
 void drawAttributeInputs(Attributes *attributes) {

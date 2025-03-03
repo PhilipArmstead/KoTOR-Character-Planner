@@ -17,7 +17,7 @@ int main() {
 	const uint8_t FPS = 30;
 	window_create(SCREEN_WIDTH, SCREEN_HEIGHT, FPS, "SWKoTOR Character creator");
 
-	Attributes attributes = {10, 10, 10, 10, 10, 10};
+	Attributes attributes = {{10, 0}, {10, 0}, {10, 0}, {10, 0}, {10, 0}, {10, 0}};
 	while (true) {
 		if (WindowShouldClose()) {
 			break;
