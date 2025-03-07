@@ -54,9 +54,9 @@ void drawAttributeInput(
 	DrawRectangle(BUTTON_INC_X1, y, ARROW_WIDTH, LABEL_ROW_HEIGHT, incrementColour);
 	char buf[4];
 	const uint8_t attributeValue = *attribute;
-	snprintf(buf, 3, "%d", attributeValue);
+	snprintf(buf, 4, "%d", attributeValue);
 	// TODO one day: cache this?
-	const uint8_t w = MeasureText(buf, FONT_SIZE) >> 2;
+	const uint8_t w = MeasureText(buf, FONT_SIZE) >> 1;
 	DrawText(buf, INPUT_X + INPUT_WIDTH_HALVED - w, y + PADDING, FONT_SIZE, WHITE);
 
 	const int8_t attributeValueNormalised = attributeValue - 10;

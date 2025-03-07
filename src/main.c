@@ -7,7 +7,7 @@
 // #include "enums/weapon.h"
 
 
-#define IS_BENCHMARKING 1
+#define IS_BENCHMARKING 0
 
 int main() {
 	// Lightsaber l = {
