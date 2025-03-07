@@ -30,7 +30,7 @@ int main() {
 #endif
 	window_create(SCREEN_WIDTH, SCREEN_HEIGHT, FPS, "SWKoTOR Character creator");
 
-	Attributes attributes = {{10, 0}, {10, 0}, {10, 0}, {10, 0}, {10, 0}, {10, 0}};
+	Attributes attributes = {10, 10, 10, 10, 10, 10};
 	while (true) {
 		if (WindowShouldClose()) {
 			break;

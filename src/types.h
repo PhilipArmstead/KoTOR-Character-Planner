@@ -7,15 +7,10 @@
 #define true 1
 
 typedef struct {
-	uint8_t value;
-	int8_t modifier;
-} Attribute;
-
-typedef struct {
-	Attribute strength;
-	Attribute dexterity;
-	Attribute constitution;
-	Attribute intelligence;
-	Attribute wisdom;
-	Attribute charisma;
+	uint8_t strength;
+	uint8_t dexterity;
+	uint8_t constitution;
+	uint8_t intelligence;
+	uint8_t wisdom;
+	uint8_t charisma;
 } Attributes;

@@ -1,4 +1,3 @@
-#include <math.h>
 #include <raylib.h>
 #include <stdio.h>
 
@@ -24,7 +23,7 @@
 
 void drawAttributeInput(
 	const char *label,
-	Attribute *attribute,
+	uint8_t *attribute,
 	const uint8_t i,
 	const bool isMousePressed,
 	const Vector2 mousePosition
@@ -38,21 +37,13 @@ void drawAttributeInput(
 			decrementColour = BLACK;
 
 			if (isMousePressed) {
-				--attribute->value;
-				// Divide with floor (default is to round towards 0)
-				const int8_t a = attribute->value - 10;
-				const uint8_t b = 2;
-				attribute->modifier = a / b - (a % b != 0 && (a ^ b) < 0);
+				--*attribute;
 			}
 		} else if (mousePosition.x >= BUTTON_INC_X1 && mousePosition.x <= BUTTON_INC_X2) {
 			incrementColour = BLACK;
 
 			if (isMousePressed) {
-				++attribute->value;
-				// Divide with floor (default is to round towards 0)
-				const int8_t a = attribute->value - 10;
-				const uint8_t b = 2;
-				attribute->modifier = a / b - (a % b != 0 && (a ^ b) < 0);
+				++*attribute;
 			}
 		}
 	}
@@ -62,11 +53,16 @@ void drawAttributeInput(
 	DrawRectangle(INPUT_X, y, INPUT_WIDTH, LABEL_ROW_HEIGHT, BLACK);
 	DrawRectangle(BUTTON_INC_X1, y, ARROW_WIDTH, LABEL_ROW_HEIGHT, incrementColour);
 	char buf[4];
-	snprintf(buf, 3, "%d", attribute->value);
+	const uint8_t attributeValue = *attribute;
+	snprintf(buf, 3, "%d", attributeValue);
 	// TODO one day: cache this?
 	const uint8_t w = MeasureText(buf, FONT_SIZE) >> 2;
 	DrawText(buf, INPUT_X + INPUT_WIDTH_HALVED - w, y + PADDING, FONT_SIZE, WHITE);
-	snprintf(buf, 4, "%s%d", attribute->modifier >= 0 ? "+" : "", attribute->modifier);
+
+	const int8_t attributeValueNormalised = attributeValue - 10;
+	const int8_t modifier = attributeValueNormalised / 2 - (attributeValueNormalised % 2 != 0 && (attributeValueNormalised
+		^ 2) < 0);
+	snprintf(buf, 4, "%s%d", modifier >= 0 ? "+" : "", modifier);
 	DrawText(buf, BUTTON_INC_X1 + ARROW_WIDTH + 8, y + PADDING, FONT_SIZE, BLACK);
 }
 
@@ -76,7 +72,6 @@ void drawAttributeInputs(Attributes *attributes) {
 	const Vector2 mousePosition = GetMousePosition();
 
 	// TODO: add icon to buttons
-	// TODO: add attribute modifier
 	drawAttributeInput("Strength", &attributes->strength, i++, isMousePressed, mousePosition);
 	drawAttributeInput("Dexterity", &attributes->dexterity, i++, isMousePressed, mousePosition);
 	drawAttributeInput("Constitution", &attributes->constitution, i++, isMousePressed, mousePosition);
