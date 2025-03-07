@@ -8,6 +8,7 @@
 
 
 #define IS_BENCHMARKING 0
+#define TAB_CONTENT_POSITION (RectangleU8){20, 20}
 
 int main() {
 	// Lightsaber l = {
@@ -37,7 +38,7 @@ int main() {
 		}
 
 		window_beforeDraw();
-		drawAttributeInputs(&attributes);
+		drawAttributeInputs(TAB_CONTENT_POSITION, &attributes);
 		// DrawFPS(20, 440);
 		window_afterDraw();
 

@@ -14,3 +14,8 @@ typedef struct {
 	uint8_t wisdom;
 	uint8_t charisma;
 } Attributes;
+
+typedef struct {
+	uint8_t x;
+	uint8_t y;
+} RectangleU8;

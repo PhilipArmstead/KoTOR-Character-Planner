@@ -3,4 +3,4 @@
 #include "../types.h"
 
 
-void drawAttributeInputs(Attributes *attributes);
+void drawAttributeInputs(RectangleU8 position, Attributes *attributes);

@@ -8,8 +8,6 @@
 #define LABEL_WIDTH_OFFSET 8
 #define INPUT_WIDTH 50
 #define INPUT_WIDTH_HALVED (INPUT_WIDTH >> 1)
-#define LABEL_X 20
-#define LABEL_Y 20
 #define LABEL_ROW_HEIGHT 24
 #define LABEL_ROW_MARGIN 6
 #define ARROW_WIDTH 16
@@ -22,12 +20,16 @@
 #define BUTTON_INC_X2 BUTTON_INC_X1 + ARROW_WIDTH
 
 void drawAttributeInput(
+	const RectangleU8 position,
 	const char *label,
 	uint8_t *attribute,
 	const uint8_t i,
 	const bool isMousePressed,
 	const Vector2 mousePosition
 ) {
+#define LABEL_X position.x
+#define LABEL_Y position.y
+
 	const uint16_t y = LABEL_Y + i * (LABEL_ROW_HEIGHT + LABEL_ROW_MARGIN);
 	Color decrementColour = DARKBLUE;
 	Color incrementColour = DARKBLUE;
@@ -66,16 +68,16 @@ void drawAttributeInput(
 	DrawText(buf, BUTTON_INC_X1 + ARROW_WIDTH + 8, y + PADDING, FONT_SIZE, BLACK);
 }
 
-void drawAttributeInputs(Attributes *attributes) {
+void drawAttributeInputs(const RectangleU8 position, Attributes *attributes) {
 	uint8_t i = 0;
 	const bool isMousePressed = IsMouseButtonPressed(0);
 	const Vector2 mousePosition = GetMousePosition();
 
 	// TODO: add icon to buttons
-	drawAttributeInput("Strength", &attributes->strength, i++, isMousePressed, mousePosition);
-	drawAttributeInput("Dexterity", &attributes->dexterity, i++, isMousePressed, mousePosition);
-	drawAttributeInput("Constitution", &attributes->constitution, i++, isMousePressed, mousePosition);
-	drawAttributeInput("Intelligence", &attributes->intelligence, i++, isMousePressed, mousePosition);
-	drawAttributeInput("Wisdom", &attributes->wisdom, i++, isMousePressed, mousePosition);
-	drawAttributeInput("Charisma", &attributes->charisma, i, isMousePressed, mousePosition);
+	drawAttributeInput(position, "Strength", &attributes->strength, i++, isMousePressed, mousePosition);
+	drawAttributeInput(position, "Dexterity", &attributes->dexterity, i++, isMousePressed, mousePosition);
+	drawAttributeInput(position, "Constitution", &attributes->constitution, i++, isMousePressed, mousePosition);
+	drawAttributeInput(position, "Intelligence", &attributes->intelligence, i++, isMousePressed, mousePosition);
+	drawAttributeInput(position, "Wisdom", &attributes->wisdom, i++, isMousePressed, mousePosition);
+	drawAttributeInput(position, "Charisma", &attributes->charisma, i, isMousePressed, mousePosition);
 }
