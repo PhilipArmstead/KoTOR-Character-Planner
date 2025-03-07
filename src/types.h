@@ -16,6 +16,6 @@ typedef struct {
 } Attributes;
 
 typedef struct {
-	uint8_t x;
-	uint8_t y;
-} RectangleU8;
+	uint16_t x;
+	uint16_t y;
+} RectangleU16;

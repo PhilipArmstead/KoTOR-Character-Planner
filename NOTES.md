@@ -26,7 +26,6 @@ getCostOfAttributePoints (level: number, attributes) {
 
 ```ts
 const pointsRemaining = computed(() => levelUpAttributeAllowance.value - pointsSpent.value)
-const canSubmit = computed(() => !pointsRemaining.value)
 
 const getPointCost = (attributeIndex, value) => {
 	// Are we counting upwards or downwards?

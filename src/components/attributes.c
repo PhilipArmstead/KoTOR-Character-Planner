@@ -2,25 +2,29 @@
 #include <stdio.h>
 
 #include "attributes.h"
+#include "ui-constants.h"
 
 
 #define LABEL_WIDTH 104
 #define LABEL_WIDTH_OFFSET 8
 #define INPUT_WIDTH 50
 #define INPUT_WIDTH_HALVED (INPUT_WIDTH >> 1)
-#define LABEL_ROW_HEIGHT 24
 #define LABEL_ROW_MARGIN 6
 #define ARROW_WIDTH 16
 #define PADDING 4
-#define FONT_SIZE 16
 #define BUTTON_DEC_X1 LABEL_X + LABEL_WIDTH - LABEL_WIDTH_OFFSET
 #define BUTTON_DEC_X2 BUTTON_DEC_X1 + ARROW_WIDTH
 #define INPUT_X LABEL_X + LABEL_WIDTH + ARROW_WIDTH
 #define BUTTON_INC_X1 INPUT_X + LABEL_WIDTH_OFFSET + INPUT_WIDTH
 #define BUTTON_INC_X2 BUTTON_INC_X1 + ARROW_WIDTH
 
+int8_t getModifier(uint8_t attribute) {
+	attribute -= 10;
+	return attribute / 2 - (attribute % 2 != 0 && (attribute ^ 2) < 0);
+}
+
 void drawAttributeInput(
-	const RectangleU8 position,
+	const RectangleU16 position,
 	const char *label,
 	uint8_t *attribute,
 	const uint8_t i,
@@ -54,21 +58,19 @@ void drawAttributeInput(
 	DrawRectangle(BUTTON_DEC_X1, y, ARROW_WIDTH, LABEL_ROW_HEIGHT, decrementColour);
 	DrawRectangle(INPUT_X, y, INPUT_WIDTH, LABEL_ROW_HEIGHT, BLACK);
 	DrawRectangle(BUTTON_INC_X1, y, ARROW_WIDTH, LABEL_ROW_HEIGHT, incrementColour);
-	char buf[4];
+	char buf[5];
 	const uint8_t attributeValue = *attribute;
 	snprintf(buf, 4, "%d", attributeValue);
 	// TODO one day: cache this?
 	const uint8_t w = MeasureText(buf, FONT_SIZE) >> 1;
 	DrawText(buf, INPUT_X + INPUT_WIDTH_HALVED - w, y + PADDING, FONT_SIZE, WHITE);
 
-	const int8_t attributeValueNormalised = attributeValue - 10;
-	const int8_t modifier = attributeValueNormalised / 2 - (attributeValueNormalised % 2 != 0 && (attributeValueNormalised
-		^ 2) < 0);
-	snprintf(buf, 4, "%s%d", modifier >= 0 ? "+" : "", modifier);
+	const int8_t modifier = getModifier(attributeValue);
+	snprintf(buf, 5, "%s%d", modifier >= 0 ? "+" : "", modifier);
 	DrawText(buf, BUTTON_INC_X1 + ARROW_WIDTH + 8, y + PADDING, FONT_SIZE, BLACK);
 }
 
-void drawAttributeInputs(const RectangleU8 position, Attributes *attributes) {
+void drawAttributeInputs(const RectangleU16 position, Attributes *attributes) {
 	uint8_t i = 0;
 	const bool isMousePressed = IsMouseButtonPressed(0);
 	const Vector2 mousePosition = GetMousePosition();

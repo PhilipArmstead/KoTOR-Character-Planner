@@ -4,11 +4,12 @@
 #include "types.h"
 #include "window.h"
 #include "components/attributes.h"
+#include "components/vitals.h"
 // #include "enums/weapon.h"
 
 
 #define IS_BENCHMARKING 0
-#define TAB_CONTENT_POSITION (RectangleU8){20, 20}
+#define TAB_CONTENT_POSITION (RectangleU16){20, 20}
 
 int main() {
 	// Lightsaber l = {
@@ -39,6 +40,7 @@ int main() {
 
 		window_beforeDraw();
 		drawAttributeInputs(TAB_CONTENT_POSITION, &attributes);
+		drawVitals((RectangleU16){500, 20}, &attributes);
 		// DrawFPS(20, 440);
 		window_afterDraw();
 
@@ -65,3 +67,11 @@ int main() {
 
 	return 0;
 }
+
+// TODO: render defence, main/off hand attacks, saves, resistances
+// TODO: choose non-Jedi class + level
+// TODO: choose Jedi class + level
+// TODO: choose feats
+// TODO: choose force powers
+// TODO: show forms in tabs
+// TODO: add keyboard support
