@@ -1,10 +1,10 @@
 #pragma once
 
+#include <stdbool.h>
 #include <stdint.h>
 
 
-#define false 0
-#define true 1
+#define CLASS_COUNT 8
 
 typedef struct {
 	uint8_t strength;

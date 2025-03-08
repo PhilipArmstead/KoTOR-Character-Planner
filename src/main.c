@@ -9,9 +9,29 @@
 
 
 #define IS_BENCHMARKING 0
+#define IS_TESTING 0
+
+#if IS_TESTING
+#include "tests/tests.h"
+#endif
+
 #define TAB_CONTENT_POSITION (RectangleU16){20, 20}
 
+
 int main() {
+#if IS_TESTING
+	uint16_t failures = 0;
+
+	failures += runSkillTests();
+
+	if (failures) {
+		printf("\n Error: encountered %d test failures\n", failures);
+		return 1;
+	}
+
+	return 0;
+#endif
+
 	// Lightsaber l = {
 	// 	.damage = {2, 10},
 	// 	.type = LIGHTSABER_SINGLE,
