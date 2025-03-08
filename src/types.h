@@ -16,6 +16,11 @@ typedef struct {
 } Attributes;
 
 typedef struct {
+	Attributes attributes;
+} Character;
+
+
+typedef struct {
 	uint16_t x;
 	uint16_t y;
 } RectangleU16;

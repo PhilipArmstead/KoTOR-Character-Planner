@@ -3,29 +3,58 @@
 #include "data/classes/classes.h"
 
 
-inline int8_t getModifier(uint8_t attribute) {
+inline int8_t getModifier(int8_t attribute) {
 	attribute -= 10;
 	return attribute / 2 - (attribute % 2 != 0 && (attribute ^ 2) < 0);
 }
 
-inline uint8_t getDefence(uint8_t dexterity) {
+inline float getAttackPerLevel(const uint8_t characterData) {
+	return characterData & 128 ? 1 : 0.75;
+}
+
+inline float getVitalityPerLevel(const uint8_t characterData) {
+	const uint8_t value = characterData >> 5 & 3;
+	if (value == 0) {
+		return 6;
+	}
+
+	if (value == 1) {
+		return 8;
+	}
+
+	if (value == 2) {
+		return 10;
+	}
+
+	return 12;
+}
+
+inline uint8_t getDefence(const uint8_t dexterity) {
 #define BASE 10
 
+	int8_t modifier = getModifier(dexterity);
 	// Dexterity bonus
-	// TODO: implement armour
-	const uint8_t modifier = getModifier(dexterity);
-	// const int8_t maxDexterityBonus = this.equipment.get(EquipmentSlot.BODY).maxDexterityBonus;
-	const int8_t maxDexterityBonus = 127;
-	dexterity = BASE + 2 * (modifier < maxDexterityBonus ? modifier : maxDexterityBonus);
+	{
+		// TODO: implement armour
+		// const int8_t maxDexterityBonus = this.equipment.get(EquipmentSlot.BODY).maxDexterityBonus;
+		const int8_t maxDexterityBonus = -1;
+		if (maxDexterityBonus > -1 && maxDexterityBonus < modifier) {
+			modifier = maxDexterityBonus;
+		}
+	}
 
-	// TODO: bonuses from feats, equipment, status
-	// dexterity += this.getBonus(Attribute.DEXTERITY.bonus).total
+	// TODO: dexterity bonuses from feats, equipment, status
+	// TODO: defence bonuses from feats, equipment, status
 
-	// TODO: bonuses from feats, equipment, status
+	return BASE + modifier;
+
 	// // Defence modifiers
-	// Object.entries(this.getBonus(Bonus.DEFENCE).log).forEach(([key, value]) =  > log[key] += value)
-
-	return BASE + getModifier(dexterity);
+	// Object.entries(this.getBonus(Bonus.DEFENCE).log).forEach(([key, value]) => log[key] += value)
+	//
+	// return {
+	// 	total: Math.floor(Object.entries(log).reduce((total, [, value]) => total + value, 0)),
+	// 	log,
+	// }
 }
 
 // inline void getAttack() {
@@ -109,13 +138,13 @@ inline uint16_t getVitality(const uint8_t level, const uint8_t vitalityPerLevel,
 // return weaponAttackModifier + attackBonus + this.attack.total
 // }
 
-inline enum FeatGrowthSpeed getFeatGrowth(const uint8_t growthSpeed) {
-	return growthSpeed >> 2 & 7;
+inline enum FeatGrowthSpeed getFeatGrowth(const uint8_t characterData) {
+	return characterData >> 2 & 7;
 }
 
-inline uint8_t getSkillGrowth(const uint8_t growthSpeed) {
-	return (growthSpeed & 3) + 1;
+inline uint8_t getSkillGrowth(const uint8_t characterData) {
+	return (characterData & 3) + 1;
 }
 
-uint8_t getFeatAllowance(uint8_t growthSpeed, uint8_t level);
-uint8_t getSkillAllowance(uint8_t growthSpeed, uint8_t level, int8_t intelligenceModifier);
+uint8_t getFeatAllowance(uint8_t characterData, uint8_t level);
+uint8_t getSkillAllowance(uint8_t characterData, uint8_t level, int8_t intelligenceModifier);

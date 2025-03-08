@@ -6,7 +6,7 @@
 #include "../types.h"
 
 
-void drawVitals(const RectangleU16 position, const Attributes *attributes) {
+void drawVitals(const RectangleU16 position, const Attributes attributes) {
 #define X position.x
 #define Y position.y
 
@@ -14,12 +14,12 @@ void drawVitals(const RectangleU16 position, const Attributes *attributes) {
 	char buf[5];
 	// TODO: add levels
 	// TODO: add classes
-	snprintf(buf, 5, "%d", getVitality(2, 10, attributes->constitution));
+	snprintf(buf, 5, "%d", getVitality(2, 10, attributes.constitution));
 	DrawText("Vitality:", X, Y + y, FONT_SIZE, BLACK);
 	DrawText(buf, X + 75, Y + 1 + y, FONT_SIZE, BLACK);
 	y += LABEL_ROW_HEIGHT;
 
-	snprintf(buf, 5, "%d", getDefence(attributes->dexterity));
+	snprintf(buf, 5, "%d", getDefence(attributes.dexterity));
 	DrawText("Defence:", X, Y + y, FONT_SIZE, BLACK);
 	DrawText(buf, X + 75, Y + 1 + y, FONT_SIZE, BLACK);
 	y += LABEL_ROW_HEIGHT;

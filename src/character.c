@@ -1,9 +1,8 @@
 #include "character.h"
-#include "data/classes/classes.h"
 
 
-uint8_t getFeatAllowance(uint8_t growthSpeed, uint8_t level) {
-  const enum FeatGrowthSpeed featGrowth = getFeatGrowth(growthSpeed);
+uint8_t getFeatAllowance(uint8_t data, uint8_t level) {
+  const enum FeatGrowthSpeed featGrowth = getFeatGrowth(data);
 
   switch (featGrowth) {
     case FEAT_GROWTH_SLOWER:
@@ -21,8 +20,8 @@ uint8_t getFeatAllowance(uint8_t growthSpeed, uint8_t level) {
     }
 }
 
-uint8_t getSkillAllowance(const uint8_t growthSpeed, const uint8_t level, const int8_t intelligenceModifier) {
-  const uint8_t skillGrowth = getSkillGrowth(growthSpeed);
+uint8_t getSkillAllowance(const uint8_t characterData, const uint8_t level, const int8_t intelligenceModifier) {
+  const uint8_t skillGrowth = getSkillGrowth(characterData);
 
 	if (level == 1) {
 		int8_t value = (skillGrowth + intelligenceModifier) * 4;

@@ -3,10 +3,12 @@
 #include <stdint.h>
 
 
-typedef struct {
-	float attackModifierPerLevel;
-	uint8_t vitalityPerLevel;
-} ClassModifier;
+enum VitalityPerLevel {
+	VITALITY_PER_LEVEL_6,
+	VITALITY_PER_LEVEL_8,
+	VITALITY_PER_LEVEL_10,
+	VITALITY_PER_LEVEL_12,
+};
 
 enum SaveGrowthSpeed {
 	SAVE_GROWTH_SLOW,
@@ -25,7 +27,6 @@ enum FeatGrowthSpeed {
 
 typedef struct {
 	char name[16];
-	ClassModifier modifier;
 	/**
 	 * Skills
 	 * --
@@ -36,12 +37,21 @@ typedef struct {
 	 * Feats
 	 * --
 	 * Bits 3-5 must contain a FeatGrowthSpeed value
+	 *
+	 * Vitality per level
+	 * --
+	 * Bits 6-7 must contain a number 0-3, representing 6, 8, 10 and 12
+	 * vitality points per level respectively.
+	 *
+	 * Attack modifier per level
+	 * --
+	 * Bit 8 must contain 1 if the modifier is linear or 0 if it is level * 0.75
 	*/
-	uint8_t growthSpeed;
+	uint8_t data;
 	/**
 	 * Bits 1-2 must contain a SaveGrowthSpeed value representing Fortitude
-	 * Bits 3-5 must contain a SaveGrowthSpeed value representing Reflex
-	 * Bits 3-5 must contain a SaveGrowthSpeed value representing Will
+	 * Bits 3-4 must contain a SaveGrowthSpeed value representing Reflex
+	 * Bits 5-6 must contain a SaveGrowthSpeed value representing Will
 	*/
 	uint8_t saveGrowthSpeed;
 } Class;

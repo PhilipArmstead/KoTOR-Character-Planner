@@ -53,15 +53,17 @@ int main() {
 #endif
 	window_create(SCREEN_WIDTH, SCREEN_HEIGHT, FPS, "SWKoTOR Character creator");
 
-	Attributes attributes = {10, 10, 10, 10, 10, 10};
+	Character character = {
+		.attributes = {10, 10, 10, 10, 10, 10}
+	};
 	while (true) {
 		if (WindowShouldClose()) {
 			break;
 		}
 
 		window_beforeDraw();
-		drawAttributeInputs(TAB_CONTENT_POSITION, &attributes);
-		drawVitals((RectangleU16){500, 20}, &attributes);
+		drawAttributeInputs(TAB_CONTENT_POSITION, &character.attributes);
+		drawVitals((RectangleU16){500, 20}, character.attributes);
 		// DrawFPS(20, 440);
 		window_afterDraw();
 
