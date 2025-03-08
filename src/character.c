@@ -2,6 +2,25 @@
 #include "data/classes/classes.h"
 
 
+uint8_t getFeatAllowance(uint8_t growthSpeed, uint8_t level) {
+  const enum FeatGrowthSpeed featGrowth = getFeatGrowth(growthSpeed);
+
+  switch (featGrowth) {
+    case FEAT_GROWTH_SLOWER:
+      return level == 1 || (level % 3) == 0;
+    case FEAT_GROWTH_SLOW:
+      return level == 1 || ((level + 1) % 3) == 0;
+    case FEAT_GROWTH_AVERAGE:
+      return level == 1 || level == 7 || level == 13 || (level % 3) == 0;
+    case FEAT_GROWTH_QUICK:
+      return level == 1 || level == 5 || level == 11 || level == 17 || (level % 3) == 0;
+    case FEAT_GROWTH_FAST:
+      return level & 1 || level == 2;
+    case FEAT_GROWTH_FASTER:
+      return level != 17 && level != 19;
+    }
+}
+
 uint8_t getSkillAllowance(const uint8_t growthSpeed, const uint8_t level, const int8_t intelligenceModifier) {
   const uint8_t skillGrowth = getSkillGrowth(growthSpeed);
 

@@ -18,7 +18,7 @@ const Class classes[CLASS_COUNT] = {
             .attackModifierPerLevel = 0.75,
             .vitalityPerLevel = 8,
         },
-        .growthSpeed = FEAT_GROWTH_AVERAGE << 2 | 2,
+        .growthSpeed = FEAT_GROWTH_FAST << 2 | 2,
         .saveGrowthSpeed = SAVE_GROWTH_FAST << 4 | (SAVE_GROWTH_FAST << 2 | SAVE_GROWTH_FAST),
     },
     (Class){

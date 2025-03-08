@@ -22,6 +22,7 @@ int main() {
 #if IS_TESTING
 	uint16_t failures = 0;
 
+	failures += runFeatTests();
 	failures += runSkillTests();
 
 	if (failures) {

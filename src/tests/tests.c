@@ -19,9 +19,52 @@ bool assertUint8(const uint8_t expected, const uint8_t actual) {
 	return true;
 }
 
+uint16_t runFeatTests() {
+	uint8_t failures = 0;
+	printf("\nFeat point allowance tests\n===\n");
+
+	typedef struct {
+		char name[16];
+		uint8_t index;
+		uint8_t allowed[20];
+	} TestCase;
+
+	const TestCase testCases[3] = {
+		{
+			"Soldier",
+			0,
+			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1},
+		},
+		{
+			"Scout",
+			1,
+			{1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
+		},
+		{
+			"Scoundrel",
+			2,
+			{1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1},
+		},
+	};
+
+	for (uint8_t i = 0; i < 3; ++i) {
+		const Class testClass = classes[testCases[i].index];
+		const TestCase testCase = testCases[i];
+
+		printf("When we have a %s\n", testCase.name);
+
+		for (uint8_t level = 1; level <= 20; ++level) {
+			printf("	and they are level %d\n", level);
+			failures += assertUint8(testCase.allowed[level - 1], getFeatAllowance(testClass.growthSpeed, level));
+		}
+	}
+
+	return failures;
+}
+
 uint16_t runSkillTests() {
 	uint8_t failures = 0;
-	printf("Skill point allowance tests\n===\n");
+	printf("\nSkill point allowance tests\n===\n");
 
 	typedef struct {
 		int8_t modifier;
@@ -37,21 +80,21 @@ uint16_t runSkillTests() {
 	} TestCase;
 
 	const TestCase testCases[3] = {
-		(TestCase){
+		{
 			0,
 			{
 				{"When creating Soldier", {{-1, 4}, {0, 4}, {1, 8}, {2, 12}, {3, 16}, {4, 20}}},
 				{"When levelling Soldier", {{-1, 1}, {0, 1}, {1, 1}, {2, 2}, {3, 2}, {4, 3}}}
 			},
 		},
-		(TestCase){
+		{
 			1,
 			{
 				{"When creating Scout", {{-1, 8}, {0, 12}, {1, 16}, {2, 20}, {3, 24}, {4, 28}}},
 				{"When levelling Scout", {{-1, 2}, {0, 3}, {1, 3}, {2, 4}, {3, 4}, {4, 5}}}
 			},
 		},
-		(TestCase){
+		{
 			2,
 			{
 				{"When creating Scoundrel", {{-1, 12}, {0, 16}, {1, 20}, {2, 24}, {3, 28}, {4, 32}}},
