@@ -3,6 +3,7 @@
 
 #include "attributes.h"
 #include "ui-constants.h"
+#include "../character.h"
 
 
 #define LABEL_WIDTH 104
@@ -17,11 +18,6 @@
 #define INPUT_X LABEL_X + LABEL_WIDTH + ARROW_WIDTH
 #define BUTTON_INC_X1 INPUT_X + LABEL_WIDTH_OFFSET + INPUT_WIDTH
 #define BUTTON_INC_X2 BUTTON_INC_X1 + ARROW_WIDTH
-
-int8_t getModifier(uint8_t attribute) {
-	attribute -= 10;
-	return attribute / 2 - (attribute % 2 != 0 && (attribute ^ 2) < 0);
-}
 
 void drawAttributeInput(
 	const RectangleU16 position,
