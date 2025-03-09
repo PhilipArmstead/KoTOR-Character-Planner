@@ -1,19 +1,35 @@
 #pragma once
 
+#include "character.h"
+#include "types.h"
 #include "data/classes/classes.h"
 
 
-inline int8_t getModifier(int8_t attribute) {
+extern const Class classes[CLASS_COUNT];
+
+inline uint8_t getPrimaryClassIndex(const Character character) {
+	return character.classIndices & 7;
+}
+
+inline uint8_t getSecondaryClassIndex(const Character character) {
+	return character.classIndices >> 3 & 3;
+}
+
+inline bool getCanClassBecomeJedi(const Class class) {
+	return (class.data2 & 64) > 0;
+}
+
+inline int8_t getModifier(int16_t attribute) {
 	attribute -= 10;
 	return attribute / 2 - (attribute % 2 != 0 && (attribute ^ 2) < 0);
 }
 
-inline float getAttackPerLevel(const uint8_t characterData) {
-	return characterData & 128 ? 1 : 0.75;
+inline float getAttackPerLevel(const Class class) {
+	return class.data1 & 128 ? 1 : 0.75;
 }
 
-inline float getVitalityPerLevel(const uint8_t characterData) {
-	const uint8_t value = characterData >> 5 & 3;
+inline uint8_t getVitalityPerLevel(const Class class) {
+	const uint8_t value = class.data1 >> 5 & 3;
 	if (value == 0) {
 		return 6;
 	}
@@ -66,10 +82,15 @@ inline uint8_t getDefence(const uint8_t dexterity) {
 // 	// return Math.floor(attackBonus.total + attackBonusPerLevel.total),
 // }
 
-inline uint16_t getVitality(const uint8_t level, const uint8_t vitalityPerLevel, const uint8_t constitution) {
-	float vitality = getModifier(constitution) * level;
+inline uint16_t getVitality(const Character character) {
+	const Class class1 = classes[getPrimaryClassIndex(character)];
+	const Class class2 = classes[getSecondaryClassIndex(character)];
+	const uint8_t level1 = character.level1;
+	const uint8_t level2 = character.level2 * getCanClassBecomeJedi(class1);
+	float vitality = getModifier(character.attributes.constitution) * (level1 + level2);
 
-	vitality += vitalityPerLevel * level;
+	vitality += getVitalityPerLevel(class1) * level1;
+	vitality += getVitalityPerLevel(class2) * level2;
 
 
 	// TODO: bonuses from feats, equipment, status

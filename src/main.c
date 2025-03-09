@@ -4,7 +4,9 @@
 #include "types.h"
 #include "window.h"
 #include "components/attributes.h"
+#include "components/ui-constants.h"
 #include "components/vitals.h"
+#include "data/classes/classes.h"
 // #include "enums/weapon.h"
 
 
@@ -15,8 +17,9 @@
 #include "tests/tests.h"
 #endif
 
-#define TAB_CONTENT_POSITION (RectangleU16){20, 20}
+#define TAB_CONTENT_POSITION (PointU16){20, 20}
 
+extern const Class classes[CLASS_COUNT];
 
 int main() {
 #if IS_TESTING
@@ -53,7 +56,13 @@ int main() {
 #endif
 	window_create(SCREEN_WIDTH, SCREEN_HEIGHT, FPS, "SWKoTOR Character creator");
 
+	const Font font = LoadFontEx("../assets/fonts/ubuntu-mono/Ubuntu-R.ttf", FONT_SIZE, 0, 0);
+
 	Character character = {
+		.classIndices = 0,
+		//.classIndices = 0 << 3 | 0,
+		.level1 = 1,
+		.level2 = 0,
 		.attributes = {10, 10, 10, 10, 10, 10}
 	};
 	while (true) {
@@ -62,12 +71,16 @@ int main() {
 		}
 
 		window_beforeDraw();
-		drawAttributeInputs(TAB_CONTENT_POSITION, &character.attributes);
-		drawVitals((RectangleU16){500, 20}, character.attributes);
+
+		const bool isMousePressed = IsMouseButtonPressed(0);
+		const Vector2 mousePosition = GetMousePosition();
+
+		// TODO: cache all buttons + labels in local structs and pre-compute positions ahead of time?
+		drawAttributeInputs(font, TAB_CONTENT_POSITION, &character.attributes, isMousePressed, mousePosition);
+		drawVitals(font, (PointU16){465, 20}, &character, isMousePressed, mousePosition);
 		// DrawFPS(20, 440);
 		window_afterDraw();
 
-		// TODO: begin this after five seconds, and print that we have begun
 #if IS_BENCHMARKING
 		struct timeval now;
 		gettimeofday(&now, NULL);
@@ -86,6 +99,7 @@ int main() {
 #endif
 	}
 
+	UnloadFont(font);
 	window_destroy();
 
 	return 0;

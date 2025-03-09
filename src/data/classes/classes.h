@@ -47,31 +47,26 @@ typedef struct {
 	 * --
 	 * Bit 8 must contain 1 if the modifier is linear or 0 if it is level * 0.75
 	*/
-	uint8_t data;
+	uint8_t data1;
 	/**
+	 * Saves
+	 * --
 	 * Bits 1-2 must contain a SaveGrowthSpeed value representing Fortitude
 	 * Bits 3-4 must contain a SaveGrowthSpeed value representing Reflex
 	 * Bits 5-6 must contain a SaveGrowthSpeed value representing Will
+	 *
+	 * Secondary class
+	 * --
+	 * Bit 7 must contain 1 if the class can become a Jedi
 	*/
-	uint8_t saveGrowthSpeed;
+	uint8_t data2;
 } Class;
 
 // 	JEDI_GUARDIAN: {
-// 		name: 'Jedi Guardian',
 // 		modifier: {
-// 			vitalityPerLevel: 10,
 // 			forcePointsPerLevel: 4,
-// 			attackModifierPerLevel: 1,
 // 		},
-// 		saveGrowth: {
-// 			[saveEnum.FORTITUDE]: saveGrowthSpeed.FAST,
-// 			[saveEnum.REFLEX]: saveGrowthSpeed.FAST,
-// 			[saveEnum.WILL]: saveGrowthSpeed.AVERAGE,
-// 		},
-// 		skillGrowth: skillGrowthEnum.SLOW,
 // 		featAllowance: featGrowthMap.MEDIUM_SLOWER,
-// 		isForceSensitive: true,
-// 		hasInnateDefence: true, // Up to 6 defence
 // 	},
 // 	JEDI_SENTINEL: {
 // 		name: 'Jedi Sentinel',
@@ -81,9 +76,9 @@ typedef struct {
 // 			attackModifierPerLevel: 0.75,
 // 		},
 // 		saveGrowth: {
-// 			[saveEnum.FORTITUDE]: saveGrowthSpeed.FAST,
-// 			[saveEnum.REFLEX]: saveGrowthSpeed.FAST,
-// 			[saveEnum.WILL]: saveGrowthSpeed.AVERAGE,
+// 			[saveEnum.FORTITUDE]: data2.FAST,
+// 			[saveEnum.REFLEX]: data2.FAST,
+// 			[saveEnum.WILL]: data2.AVERAGE,
 // 		},
 // 		skillGrowth: skillGrowthEnum.MEDIUM,
 // 		featAllowance: featGrowthMap.SLOWER,
@@ -98,9 +93,9 @@ typedef struct {
 // 			attackModifierPerLevel: 0.75,
 // 		},
 // 		saveGrowth: {
-// 			[saveEnum.FORTITUDE]: saveGrowthSpeed.FAST,
-// 			[saveEnum.REFLEX]: saveGrowthSpeed.AVERAGE,
-// 			[saveEnum.WILL]: saveGrowthSpeed.FAST,
+// 			[saveEnum.FORTITUDE]: data2.FAST,
+// 			[saveEnum.REFLEX]: data2.AVERAGE,
+// 			[saveEnum.WILL]: data2.FAST,
 // 		},
 // 		skillGrowth: skillGrowthEnum.SLOW,
 // 		featAllowance: featGrowthMap.SLOWER,
@@ -114,9 +109,9 @@ typedef struct {
 // 			attackModifierPerLevel: 1,
 // 		},
 // 		saveGrowth: {
-// 			[saveEnum.FORTITUDE]: saveGrowthSpeed.FAST,
-// 			[saveEnum.REFLEX]: saveGrowthSpeed.SLOW,
-// 			[saveEnum.WILL]: saveGrowthSpeed.SLOW,
+// 			[saveEnum.FORTITUDE]: data2.FAST,
+// 			[saveEnum.REFLEX]: data2.SLOW,
+// 			[saveEnum.WILL]: data2.SLOW,
 // 		},
 // 		skillGrowth: skillGrowthEnum.SLOW,
 // 		featAllowance: featGrowthMap.SLOWER,
@@ -129,9 +124,9 @@ typedef struct {
 // 			attackModifierPerLevel: 0.75,
 // 		},
 // 		saveGrowth: {
-// 			[saveEnum.FORTITUDE]: saveGrowthSpeed.SLOW,
-// 			[saveEnum.REFLEX]: saveGrowthSpeed.FAST,
-// 			[saveEnum.WILL]: saveGrowthSpeed.SLOW,
+// 			[saveEnum.FORTITUDE]: data2.SLOW,
+// 			[saveEnum.REFLEX]: data2.FAST,
+// 			[saveEnum.WILL]: data2.SLOW,
 // 		},
 // 		skillGrowth: skillGrowthEnum.MEDIUM,
 // 		featAllowance: featGrowthMap.MEDIUM_SLOW,
@@ -145,9 +140,9 @@ typedef struct {
 // 			attackModifierPerLevel: 1,
 // 		},
 // 		saveGrowth: {
-// 			[saveEnum.FORTITUDE]: saveGrowthSpeed.FAST,
-// 			[saveEnum.REFLEX]: saveGrowthSpeed.SLOW,
-// 			[saveEnum.WILL]: saveGrowthSpeed.SLOW,
+// 			[saveEnum.FORTITUDE]: data2.FAST,
+// 			[saveEnum.REFLEX]: data2.SLOW,
+// 			[saveEnum.WILL]: data2.SLOW,
 // 		},
 // 	},
 // 	SITH_SOLDIER_NEWBIE: {
@@ -157,9 +152,9 @@ typedef struct {
 // 			attackModifierPerLevel: 1,
 // 		},
 // 		saveGrowth: {
-// 			[saveEnum.FORTITUDE]: saveGrowthSpeed.FAST,
-// 			[saveEnum.REFLEX]: saveGrowthSpeed.SLOW,
-// 			[saveEnum.WILL]: saveGrowthSpeed.SLOW,
+// 			[saveEnum.FORTITUDE]: data2.FAST,
+// 			[saveEnum.REFLEX]: data2.SLOW,
+// 			[saveEnum.WILL]: data2.SLOW,
 // 		},
 // 	},
 // })

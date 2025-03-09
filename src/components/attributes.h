@@ -3,4 +3,10 @@
 #include "../types.h"
 
 
-void drawAttributeInputs(RectangleU16 position, Attributes *attributes);
+void drawAttributeInputs(
+	Font font,
+	PointU16 position,
+	Attributes *attributes,
+	bool isMousePressed,
+	Vector2 mousePosition
+);

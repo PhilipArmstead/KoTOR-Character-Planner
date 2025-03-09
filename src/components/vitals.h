@@ -3,4 +3,10 @@
 #include "../types.h"
 
 
-void drawVitals(RectangleU16 position, const Attributes attributes);
+void drawVitals(
+	Font font,
+	PointU16 position,
+	const Character *character,
+	bool isMousePressed,
+	Vector2 mousePosition
+);
