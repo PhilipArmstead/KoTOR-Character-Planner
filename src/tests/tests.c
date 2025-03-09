@@ -29,7 +29,8 @@ uint16_t runFeatTests() {
 		uint8_t allowed[20];
 	} TestCase;
 
-	const TestCase testCases[5] = {
+#define TEST_CASE_COUNT 6
+	const TestCase testCases[TEST_CASE_COUNT] = {
 		{
 			"Soldier",
 			0,
@@ -55,9 +56,14 @@ uint16_t runFeatTests() {
 			4,
 			{1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0},
 		},
+		{
+			"Jedi Guardian",
+			5,
+			{1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0},
+		},
 	};
 
-	for (uint8_t i = 0; i < 5; ++i) {
+	for (uint8_t i = 0; i < TEST_CASE_COUNT; ++i) {
 		const Class testClass = classes[testCases[i].index];
 		const TestCase testCase = testCases[i];
 
@@ -89,7 +95,8 @@ uint16_t runSkillTests() {
 		TestSuite tests[2];
 	} TestCase;
 
-	const TestCase testCases[5] = {
+#define TEST_CASE_COUNT 6
+	const TestCase testCases[TEST_CASE_COUNT] = {
 		{
 			0,
 			{
@@ -125,9 +132,16 @@ uint16_t runSkillTests() {
 				{"When levelling Expert Droid", {{-1, 1}, {0, 2}, {1, 2}, {2, 3}, {3, 3}, {4, 4}}}
 			},
 		},
+		{
+			5,
+			{
+				{"When creating Jedi Guardian", {{-1, 4}, {0, 4}, {1, 8}, {2, 12}, {3, 16}, {4, 20}}},
+				{"When levelling Jedi Guardian", {{-1, 1}, {0, 1}, {1, 1}, {2, 2}, {3, 2}, {4, 3}}}
+			},
+		},
 	};
 
-	for (uint8_t i = 0; i < 5; ++i) {
+	for (uint8_t i = 0; i < TEST_CASE_COUNT; ++i) {
 		const Class testClass = classes[testCases[i].index];
 
 		const TestSuite *suite = testCases[i].tests;

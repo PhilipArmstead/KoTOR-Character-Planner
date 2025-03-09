@@ -30,7 +30,7 @@ const Class classes[CLASS_COUNT] = {
     },
     (Class){
         .name = "Jedi Guardian",
-        .data1 = 1 << 7 | VITALITY_PER_LEVEL_10 << 5 | FEAT_GROWTH_SLOW << 2 | 0,
+        .data1 = 1 << 7 | VITALITY_PER_LEVEL_10 << 5 | FEAT_GROWTH_AVERAGE << 2 | 0,
         .data2 = SAVE_GROWTH_AVERAGE << 4 | SAVE_GROWTH_FAST << 2 | SAVE_GROWTH_FAST,
     },
 };
