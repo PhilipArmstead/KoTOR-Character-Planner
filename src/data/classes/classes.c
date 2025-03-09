@@ -26,7 +26,7 @@ const Class classes[CLASS_COUNT] = {
     (Class){
         .name = "Expert Droid",
         .data1 = VITALITY_PER_LEVEL_8 << 5 | FEAT_GROWTH_QUICK << 2 | 1,
-        .data2 = SAVE_GROWTH_SLOW << 4 | (SAVE_GROWTH_FAST << 2 | SAVE_GROWTH_SLOW),
+        .data2 = SAVE_GROWTH_SLOW << 4 | SAVE_GROWTH_FAST << 2 | SAVE_GROWTH_SLOW,
     },
     (Class){
         .name = "Jedi Guardian",
@@ -37,5 +37,10 @@ const Class classes[CLASS_COUNT] = {
         .name = "Jedi Sentinel",
         .data1 = VITALITY_PER_LEVEL_8 << 5 | FEAT_GROWTH_SLOWER << 2 | 1,
         .data2 = SAVE_GROWTH_AVERAGE << 4 | SAVE_GROWTH_FAST << 2 | SAVE_GROWTH_FAST,
+    },
+    (Class){
+        .name = "Jedi Consular",
+        .data1 = VITALITY_PER_LEVEL_6 << 5 | FEAT_GROWTH_SLOWER << 2 | 0,
+        .data2 = SAVE_GROWTH_FAST << 4 | SAVE_GROWTH_AVERAGE << 2 | SAVE_GROWTH_FAST,
     },
 };

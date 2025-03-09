@@ -26,8 +26,7 @@ void drawClassInput(
 
 	uint8_t classIndex1 = getPrimaryClassIndex(*character);
 	uint8_t classIndex2 = getSecondaryClassIndex(*character);
-	// TODO: make 5 a constant JEDI_START_INDEX
-	Class class = classes[isPrimaryClass ? classIndex1 : classIndex2 + 5];
+	Class class = classes[isPrimaryClass ? classIndex1 : classIndex2 + INDEX_JEDI_START];
 
 	// Level number
 	{
@@ -66,9 +65,8 @@ void drawClassInput(
 				classIndex1 = classIndex1 < 4 ? classIndex1 + 1 : 0;
 				c = classIndex1;
 			} else {
-				// TODO: change first 1 to 2 when Jedi Consular is added
-				classIndex2 = classIndex2 < 1 ? classIndex2 + 1 : 0;
-				c = classIndex2 + 5; // TODO: make 5 a constant JEDI_START_INDEX
+				classIndex2 = classIndex2 < 2 ? classIndex2 + 1 : 0;
+				c = classIndex2 + INDEX_JEDI_START;
 			}
 			character->classIndices = classIndex2 << 3 | classIndex1;
 			class = classes[c];

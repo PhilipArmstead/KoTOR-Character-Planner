@@ -3,6 +3,8 @@
 #include <stdint.h>
 
 
+#define INDEX_JEDI_START 5
+
 enum VitalityPerLevel {
 	VITALITY_PER_LEVEL_6,
 	VITALITY_PER_LEVEL_8,
@@ -69,20 +71,7 @@ typedef struct {
 // 		forcePointsPerLevel: 6,
 // 	},
 // 	JEDI_CONSULAR: {
-// 		name: 'Jedi Consular',
-// 		modifier: {
-// 			vitalityPerLevel: 6,
-// 			forcePointsPerLevel: 8,
-// 			attackModifierPerLevel: 0.75,
-// 		},
-// 		saveGrowth: {
-// 			[saveEnum.FORTITUDE]: data2.FAST,
-// 			[saveEnum.REFLEX]: data2.AVERAGE,
-// 			[saveEnum.WILL]: data2.FAST,
-// 		},
-// 		skillGrowth: skillGrowthEnum.SLOW,
-// 		featAllowance: featGrowthMap.SLOWER,
-// 		isForceSensitive: true,
+// 		forcePointsPerLevel: 8,
 // 	},
 // 	MINION: {
 // 		// TODO: merge with Soldier
