@@ -66,8 +66,8 @@ void drawClassInput(
 				classIndex1 = classIndex1 < 4 ? classIndex1 + 1 : 0;
 				c = classIndex1;
 			} else {
-				// TODO: change first 0 to 1/2 when more Jedi classes are added
-				classIndex2 = classIndex2 < 0 ? classIndex2 + 1 : 0;
+				// TODO: change first 1 to 2 when Jedi Consular is added
+				classIndex2 = classIndex2 < 1 ? classIndex2 + 1 : 0;
 				c = classIndex2 + 5; // TODO: make 5 a constant JEDI_START_INDEX
 			}
 			character->classIndices = classIndex2 << 3 | classIndex1;

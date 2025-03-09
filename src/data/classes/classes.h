@@ -63,26 +63,10 @@ typedef struct {
 } Class;
 
 // 	JEDI_GUARDIAN: {
-// 		modifier: {
-// 			forcePointsPerLevel: 4,
-// 		},
-// 		featAllowance: featGrowthMap.MEDIUM_SLOWER,
+// 		forcePointsPerLevel: 4,
 // 	},
 // 	JEDI_SENTINEL: {
-// 		name: 'Jedi Sentinel',
-// 		modifier: {
-// 			vitalityPerLevel: 8,
-// 			forcePointsPerLevel: 6,
-// 			attackModifierPerLevel: 0.75,
-// 		},
-// 		saveGrowth: {
-// 			[saveEnum.FORTITUDE]: data2.FAST,
-// 			[saveEnum.REFLEX]: data2.FAST,
-// 			[saveEnum.WILL]: data2.AVERAGE,
-// 		},
-// 		skillGrowth: skillGrowthEnum.MEDIUM,
-// 		featAllowance: featGrowthMap.SLOWER,
-// 		isForceSensitive: true,
+// 		forcePointsPerLevel: 6,
 // 	},
 // 	JEDI_CONSULAR: {
 // 		name: 'Jedi Consular',

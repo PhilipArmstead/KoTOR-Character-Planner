@@ -33,4 +33,9 @@ const Class classes[CLASS_COUNT] = {
         .data1 = 1 << 7 | VITALITY_PER_LEVEL_10 << 5 | FEAT_GROWTH_AVERAGE << 2 | 0,
         .data2 = SAVE_GROWTH_AVERAGE << 4 | SAVE_GROWTH_FAST << 2 | SAVE_GROWTH_FAST,
     },
+    (Class){
+        .name = "Jedi Sentinel",
+        .data1 = VITALITY_PER_LEVEL_8 << 5 | FEAT_GROWTH_SLOWER << 2 | 1,
+        .data2 = SAVE_GROWTH_AVERAGE << 4 | SAVE_GROWTH_FAST << 2 | SAVE_GROWTH_FAST,
+    },
 };

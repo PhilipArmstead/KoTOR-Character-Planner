@@ -29,7 +29,7 @@ uint16_t runFeatTests() {
 		uint8_t allowed[20];
 	} TestCase;
 
-#define TEST_CASE_COUNT 6
+#define TEST_CASE_COUNT 7
 	const TestCase testCases[TEST_CASE_COUNT] = {
 		{
 			"Soldier",
@@ -60,6 +60,11 @@ uint16_t runFeatTests() {
 			"Jedi Guardian",
 			5,
 			{1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0},
+		},
+		{
+			"Jedi Sentinel",
+			6,
+			{1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0},
 		},
 	};
 
@@ -95,7 +100,7 @@ uint16_t runSkillTests() {
 		TestSuite tests[2];
 	} TestCase;
 
-#define TEST_CASE_COUNT 6
+#define TEST_CASE_COUNT 7
 	const TestCase testCases[TEST_CASE_COUNT] = {
 		{
 			0,
@@ -137,6 +142,13 @@ uint16_t runSkillTests() {
 			{
 				{"When creating Jedi Guardian", {{-1, 4}, {0, 4}, {1, 8}, {2, 12}, {3, 16}, {4, 20}}},
 				{"When levelling Jedi Guardian", {{-1, 1}, {0, 1}, {1, 1}, {2, 2}, {3, 2}, {4, 3}}}
+			},
+		},
+		{
+			6,
+			{
+				{"When creating Jedi Sentinel", {{-1, 4}, {0, 8}, {1, 12}, {2, 16}, {3, 20}, {4, 24}}},
+				{"When levelling Jedi Sentinel", {{-1, 1}, {0, 2}, {1, 2}, {2, 3}, {3, 3}, {4, 4}}}
 			},
 		},
 	};
