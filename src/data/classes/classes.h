@@ -100,27 +100,6 @@ typedef struct {
 // 		featAllowance: featGrowthMap.SLOWER,
 // 		isForceSensitive: true,
 // 	},
-// 	COMBAT_DROID: {
-// 		saveGrowth: {
-// 			[saveEnum.FORTITUDE]: data2.FAST,
-// 			[saveEnum.REFLEX]: data2.SLOW,
-// 			[saveEnum.WILL]: data2.SLOW,
-// 		},
-// 	},
-// 	EXPERT_DROID: {
-// 		name: 'Expert Droid',
-// 		modifier: {
-// 			vitalityPerLevel: 8,
-// 			attackModifierPerLevel: 0.75,
-// 		},
-// 		saveGrowth: {
-// 			[saveEnum.FORTITUDE]: data2.SLOW,
-// 			[saveEnum.REFLEX]: data2.FAST,
-// 			[saveEnum.WILL]: data2.SLOW,
-// 		},
-// 		skillGrowth: skillGrowthEnum.MEDIUM,
-// 		featAllowance: featGrowthMap.MEDIUM_SLOW,
-// 	},
 // 	MINION: {
 // 		// TODO: merge with Soldier
 // 		name: 'Minion',

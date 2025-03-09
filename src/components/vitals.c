@@ -26,7 +26,8 @@ void drawClassInput(
 
 	uint8_t classIndex1 = getPrimaryClassIndex(*character);
 	uint8_t classIndex2 = getSecondaryClassIndex(*character);
-	Class class = classes[isPrimaryClass ? classIndex1 : classIndex2];
+	// TODO: make 5 a constant JEDI_START_INDEX
+	Class class = classes[isPrimaryClass ? classIndex1 : classIndex2 + 5];
 
 	// Level number
 	{
@@ -62,14 +63,12 @@ void drawClassInput(
 		if (isMousePressed && isPointIntersecting(mousePoint, levelRectangle)) {
 			uint8_t c;
 			if (isPrimaryClass) {
-				// TODO: change this 3 to 4 when Expert Droid class is added
-				classIndex1 = classIndex1 < 3 ? classIndex1 + 1 : 0;
+				classIndex1 = classIndex1 < 4 ? classIndex1 + 1 : 0;
 				c = classIndex1;
 			} else {
-				// TODO: change first 4 to 5 when Expert Droid class is added
-				// TODO: change second 3 to 6/7 when more Jedi classes are added
-				classIndex2 = classIndex2 < 4 ? classIndex2 + 1 : 3;
-				c = classIndex2;
+				// TODO: change first 0 to 1/2 when more Jedi classes are added
+				classIndex2 = classIndex2 < 0 ? classIndex2 + 1 : 0;
+				c = classIndex2 + 5; // TODO: make 5 a constant JEDI_START_INDEX
 			}
 			character->classIndices = classIndex2 << 3 | classIndex1;
 			class = classes[c];
