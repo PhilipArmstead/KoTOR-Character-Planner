@@ -29,7 +29,7 @@ uint16_t runFeatTests() {
 		uint8_t allowed[20];
 	} TestCase;
 
-	const TestCase testCases[3] = {
+	const TestCase testCases[4] = {
 		{
 			"Soldier",
 			0,
@@ -45,9 +45,14 @@ uint16_t runFeatTests() {
 			2,
 			{1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1},
 		},
+		{
+			"Combat Droid",
+			3,
+			{1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0},
+		},
 	};
 
-	for (uint8_t i = 0; i < 3; ++i) {
+	for (uint8_t i = 0; i < 4; ++i) {
 		const Class testClass = classes[testCases[i].index];
 		const TestCase testCase = testCases[i];
 
@@ -79,7 +84,7 @@ uint16_t runSkillTests() {
 		TestSuite tests[2];
 	} TestCase;
 
-	const TestCase testCases[3] = {
+	const TestCase testCases[4] = {
 		{
 			0,
 			{
@@ -101,9 +106,16 @@ uint16_t runSkillTests() {
 				{"When levelling Scoundrel", {{-1, 3}, {0, 4}, {1, 4}, {2, 5}, {3, 5}, {4, 6}}}
 			},
 		},
+		{
+			3,
+			{
+				{"When creating Combat Droid", {{-1, 4}, {0, 4}, {1, 8}, {2, 12}, {3, 16}, {4, 20}}},
+				{"When levelling Combat Droid", {{-1, 1}, {0, 1}, {1, 1}, {2, 2}, {3, 2}, {4, 3}}}
+			},
+		},
 	};
 
-	for (uint8_t i = 0; i < 3; ++i) {
+	for (uint8_t i = 0; i < 4; ++i) {
 		const Class testClass = classes[testCases[i].index];
 
 		const TestSuite *suite = testCases[i].tests;

@@ -62,13 +62,13 @@ void drawClassInput(
 		if (isMousePressed && isPointIntersecting(mousePoint, levelRectangle)) {
 			uint8_t c;
 			if (isPrimaryClass) {
-				// TODO: change this 2 to 3/4 when droid classes are added
-				classIndex1 = classIndex1 < 2 ? classIndex1 + 1 : 0;
+				// TODO: change this 3 to 4 when Expert Droid class is added
+				classIndex1 = classIndex1 < 3 ? classIndex1 + 1 : 0;
 				c = classIndex1;
 			} else {
-				// TODO: change first 3 to 4/5 when more droid classes are added
+				// TODO: change first 4 to 5 when Expert Droid class is added
 				// TODO: change second 3 to 6/7 when more Jedi classes are added
-				classIndex2 = classIndex2 < 3 ? classIndex2 + 1 : 3;
+				classIndex2 = classIndex2 < 4 ? classIndex2 + 1 : 3;
 				c = classIndex2;
 			}
 			character->classIndices = classIndex2 << 3 | classIndex1;

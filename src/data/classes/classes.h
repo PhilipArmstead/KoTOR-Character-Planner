@@ -83,7 +83,6 @@ typedef struct {
 // 		skillGrowth: skillGrowthEnum.MEDIUM,
 // 		featAllowance: featGrowthMap.SLOWER,
 // 		isForceSensitive: true,
-// 		hasInnateDefence: true, // Up to 6 defence
 // 	},
 // 	JEDI_CONSULAR: {
 // 		name: 'Jedi Consular',
@@ -100,22 +99,13 @@ typedef struct {
 // 		skillGrowth: skillGrowthEnum.SLOW,
 // 		featAllowance: featGrowthMap.SLOWER,
 // 		isForceSensitive: true,
-// 		hasInnateDefence: true, // Up to 6 defence
 // 	},
 // 	COMBAT_DROID: {
-// 		name: 'Combat Droid',
-// 		modifier: {
-// 			vitalityPerLevel: 12,
-// 			attackModifierPerLevel: 1,
-// 		},
 // 		saveGrowth: {
 // 			[saveEnum.FORTITUDE]: data2.FAST,
 // 			[saveEnum.REFLEX]: data2.SLOW,
 // 			[saveEnum.WILL]: data2.SLOW,
 // 		},
-// 		skillGrowth: skillGrowthEnum.SLOW,
-// 		featAllowance: featGrowthMap.SLOWER,
-// 		hasInnateDefence: true, // Up to 6 defence
 // 	},
 // 	EXPERT_DROID: {
 // 		name: 'Expert Droid',
@@ -130,7 +120,6 @@ typedef struct {
 // 		},
 // 		skillGrowth: skillGrowthEnum.MEDIUM,
 // 		featAllowance: featGrowthMap.MEDIUM_SLOW,
-// 		hasInnateDefence: true, // Up to 6 defence
 // 	},
 // 	MINION: {
 // 		// TODO: merge with Soldier
