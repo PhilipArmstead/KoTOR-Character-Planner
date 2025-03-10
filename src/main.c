@@ -121,3 +121,4 @@ int main() {
 // TODO: choose force powers
 // TODO: show forms in tabs
 // TODO: add keyboard support
+// TODO: select species for specific feats
