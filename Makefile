@@ -32,9 +32,9 @@ all:
 
 release: CCFLAGS += -O3
 release: all
-debug: CCFLAGS += -O0 -DDEBUG -g -fsanitize=address,undefined
+debug: CCFLAGS += -O0 -DDEBUG -g
 debug: all
-release-with-debug: CCFLAGS += -O3 -DDEBUG -g -fsanitize=address,undefined
+release-with-debug: CCFLAGS += -O3 -DDEBUG -g
 release-with-debug: all
 testing: CCFLAGS += -DIS_TESTING=1
 testing: release-with-debug

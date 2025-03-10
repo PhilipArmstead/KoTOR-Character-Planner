@@ -79,9 +79,10 @@ int main() {
 
 		window_beforeDraw();
 
+		const Vector2 mousePosition = GetMousePosition();
 		const MouseContext mouseContext = {
 			.isPressed = IsMouseButtonPressed(0),
-			.position = GetMousePosition()
+			.position = {.x = (uint16_t)mousePosition.x, .y = (uint16_t)mousePosition.y}
 		};
 
 		// TODO: cache all buttons + labels in local structs and pre-compute positions ahead of time?

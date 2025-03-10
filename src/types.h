@@ -29,12 +29,6 @@ typedef struct {
 
 
 typedef struct {
-	Vector2 position;
-	bool isPressed;
-} MouseContext;
-
-
-typedef struct {
 	int16_t x;
 	int16_t y;
 	int16_t width;
@@ -46,6 +40,11 @@ typedef struct {
 	uint16_t y;
 } PointU16;
 
+
+typedef struct {
+	PointU16 position;
+	bool isPressed;
+} MouseContext;
 
 typedef struct {
 	Texture arrowLeft;

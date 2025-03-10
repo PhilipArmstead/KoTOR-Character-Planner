@@ -7,8 +7,6 @@
 #include "../utility.h"
 
 
-extern const Class classes[CLASS_COUNT];
-
 void drawClassInput(
 	const Font font,
 	const Vector2 position,
@@ -21,7 +19,7 @@ void drawClassInput(
 
 	char buf[16];
 	const PointU16 mousePoint = {mouse.position.x, mouse.position.y};
-	const uint8_t labelWidth = MeasureTextEx(font, label, FONT_SIZE, 0).x;
+	const uint8_t labelWidth = (uint8_t)MeasureTextEx(font, label, FONT_SIZE, 0).x;
 
 	uint8_t classIndex1 = getPrimaryClassIndex(*character);
 	uint8_t classIndex2 = getSecondaryClassIndex(*character);
@@ -32,9 +30,14 @@ void drawClassInput(
 		uint8_t level1 = character->level1;
 		uint8_t level2 = character->level2;
 		snprintf(buf, 4, "%d ", isPrimaryClass ? level1 : level2);
-		const Vector2 levelPosition = {position.x + labelWidth, position.y};
+		const Vector2 levelPosition = {position.x + (float)labelWidth, position.y};
 		const Vector2 levelSize = MeasureTextEx(font, buf, FONT_SIZE, 0);
-		const RectangleI16 levelRectangle = {levelPosition.x, levelPosition.y, levelSize.x, levelSize.y};
+		const RectangleI16 levelRectangle = {
+			(int16_t)levelPosition.x,
+			(int16_t)levelPosition.y,
+			(int16_t)levelSize.x,
+			(int16_t)levelSize.y
+		};
 		if (mouse.isPressed && isPointIntersecting(mousePoint, levelRectangle)) {
 			if (isPrimaryClass) {
 				level1 = level1 < 20 ? level1 + 1 : 1;
@@ -52,12 +55,17 @@ void drawClassInput(
 	// Class name
 	{
 		const Vector2 levelSize = MeasureTextEx(font, buf, FONT_SIZE, 0);
-		const Vector2 classPosition = {position.x + labelWidth + levelSize.x, position.y};
+		const Vector2 classPosition = {position.x + (float)labelWidth + levelSize.x, position.y};
 
 		snprintf(buf, 16, "%s", class.name);
 
 		const Vector2 classSize = MeasureTextEx(font, buf, FONT_SIZE, 0);
-		const RectangleI16 levelRectangle = {classPosition.x, classPosition.y, classSize.x, classSize.y};
+		const RectangleI16 levelRectangle = {
+			(int16_t)classPosition.x,
+			(int16_t)classPosition.y,
+			(int16_t)classSize.x,
+			(int16_t)classSize.y
+		};
 		if (mouse.isPressed && isPointIntersecting(mousePoint, levelRectangle)) {
 			uint8_t c;
 			if (isPrimaryClass) {

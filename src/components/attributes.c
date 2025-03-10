@@ -11,11 +11,11 @@
 #define INPUT_WIDTH 50
 #define INPUT_WIDTH_HALVED (INPUT_WIDTH >> 1)
 #define PADDING 4
-#define BUTTON_DEC_X1 LABEL_X + LABEL_WIDTH - LABEL_WIDTH_OFFSET
-#define BUTTON_DEC_X2 BUTTON_DEC_X1 + ARROW_WIDTH
-#define INPUT_X LABEL_X + LABEL_WIDTH + ARROW_WIDTH
-#define BUTTON_INC_X1 INPUT_X + LABEL_WIDTH_OFFSET + INPUT_WIDTH
-#define BUTTON_INC_X2 BUTTON_INC_X1 + ARROW_WIDTH
+#define BUTTON_DEC_X1 (LABEL_X + LABEL_WIDTH - LABEL_WIDTH_OFFSET)
+#define BUTTON_DEC_X2 (BUTTON_DEC_X1 + ARROW_WIDTH)
+#define INPUT_X (LABEL_X + LABEL_WIDTH + ARROW_WIDTH)
+#define BUTTON_INC_X1 (INPUT_X + LABEL_WIDTH_OFFSET + INPUT_WIDTH)
+#define BUTTON_INC_X2 (BUTTON_INC_X1 + ARROW_WIDTH)
 
 void drawAttributeInput(
 	const Font font,
@@ -48,7 +48,7 @@ void drawAttributeInput(
 		}
 	}
 
-	DrawTextEx(font, label, (Vector2){LABEL_X, y + PADDING}, FONT_SIZE, 0, BLACK);
+	DrawTextEx(font, label, (Vector2){LABEL_X, (float)y + PADDING}, FONT_SIZE, 0, BLACK);
 	DrawTexture(context.arrowLeft, BUTTON_DEC_X1, y, decrementColour);
 	DrawRectangle(INPUT_X, y, INPUT_WIDTH, LABEL_ROW_HEIGHT, BLACK);
 	DrawTexture(context.arrowRight, BUTTON_INC_X1, y, incrementColour);
@@ -57,11 +57,18 @@ void drawAttributeInput(
 	snprintf(buf, 4, "%d", attributeValue);
 	// TODO one day: cache this?
 	const Vector2 size = MeasureTextEx(font, buf, FONT_SIZE, 0);
-	DrawTextEx(font, buf, (Vector2){INPUT_X + INPUT_WIDTH_HALVED - ((int)size.x >> 1), y + PADDING}, FONT_SIZE, 0, WHITE);
+	DrawTextEx(
+		font,
+		buf,
+		(Vector2){INPUT_X + INPUT_WIDTH_HALVED - ((int)size.x >> 1), (float)y + PADDING},
+		FONT_SIZE,
+		0,
+		WHITE
+	);
 
 	const int8_t modifier = getModifier(attributeValue);
 	snprintf(buf, 5, "%s%d", modifier >= 0 ? "+" : "", modifier);
-	DrawTextEx(font, buf, (Vector2){BUTTON_INC_X1 + ARROW_WIDTH + 8, y + PADDING}, FONT_SIZE, 0, BLACK);
+	DrawTextEx(font, buf, (Vector2){BUTTON_INC_X1 + ARROW_WIDTH + 8, (float)y + PADDING}, FONT_SIZE, 0, BLACK);
 }
 
 void drawAttributeInputs(
@@ -77,5 +84,5 @@ void drawAttributeInputs(
 	drawAttributeInput(font, context, "Constitution", &attributes->constitution, i++, mouse);
 	drawAttributeInput(font, context, "Intelligence", &attributes->intelligence, i++, mouse);
 	drawAttributeInput(font, context, "Wisdom", &attributes->wisdom, i++, mouse);
-	drawAttributeInput(font, context, "Charisma", &attributes->charisma, i, mouse);
+	drawAttributeInput(font, context, "Charisma", &attributes->charisma, i++, mouse);
 }
