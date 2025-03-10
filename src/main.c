@@ -58,6 +58,14 @@ int main() {
 
 	const Font font = LoadFontEx("../assets/fonts/ubuntu-mono/Ubuntu-R.ttf", FONT_SIZE, 0, 0);
 
+	AttributesContext attributesContext = {.contentPosition = TAB_CONTENT_POSITION};
+	Image imageArrowRight = LoadImage("../assets/icons/arrow-right.png");
+	ImageResize(&imageArrowRight, ARROW_WIDTH, LABEL_ROW_HEIGHT);
+	attributesContext.arrowRight = LoadTextureFromImage(imageArrowRight);
+	ImageFlipHorizontal(&imageArrowRight);
+	attributesContext.arrowLeft = LoadTextureFromImage(imageArrowRight);
+	UnloadImage(imageArrowRight);
+
 	Character character = {
 		.classIndices = 0,
 		//.classIndices = 0 << 3 | 0,
@@ -72,12 +80,14 @@ int main() {
 
 		window_beforeDraw();
 
-		const bool isMousePressed = IsMouseButtonPressed(0);
-		const Vector2 mousePosition = GetMousePosition();
+		const MouseContext mouseContext = {
+			.isPressed = IsMouseButtonPressed(0),
+			.position = GetMousePosition()
+		};
 
 		// TODO: cache all buttons + labels in local structs and pre-compute positions ahead of time?
-		drawAttributeInputs(font, TAB_CONTENT_POSITION, &character.attributes, isMousePressed, mousePosition);
-		drawVitals(font, (PointU16){465, 20}, &character, isMousePressed, mousePosition);
+		drawAttributeInputs(font, attributesContext, mouseContext, &character.attributes);
+		drawVitals(font, (PointU16){465, 20}, mouseContext, &character);
 		// DrawFPS(20, 440);
 		window_afterDraw();
 
@@ -99,6 +109,7 @@ int main() {
 #endif
 	}
 
+	UnloadTexture(attributesContext.arrowRight);
 	UnloadFont(font);
 	window_destroy();
 
@@ -106,8 +117,6 @@ int main() {
 }
 
 // TODO: render defence, main/off hand attacks, saves, resistances
-// TODO: choose non-Jedi class + level
-// TODO: choose Jedi class + level
 // TODO: choose feats
 // TODO: choose force powers
 // TODO: show forms in tabs

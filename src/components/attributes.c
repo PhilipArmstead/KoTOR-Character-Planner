@@ -10,7 +10,6 @@
 #define LABEL_WIDTH_OFFSET 8
 #define INPUT_WIDTH 50
 #define INPUT_WIDTH_HALVED (INPUT_WIDTH >> 1)
-#define ARROW_WIDTH 16
 #define PADDING 4
 #define BUTTON_DEC_X1 LABEL_X + LABEL_WIDTH - LABEL_WIDTH_OFFSET
 #define BUTTON_DEC_X2 BUTTON_DEC_X1 + ARROW_WIDTH
@@ -20,40 +19,39 @@
 
 void drawAttributeInput(
 	const Font font,
-	const PointU16 position,
+	const AttributesContext context,
 	const char *label,
 	uint8_t *attribute,
 	const uint8_t i,
-	const bool isMousePressed,
-	const Vector2 mousePosition
+	const MouseContext mouse
 ) {
-#define LABEL_X position.x
-#define LABEL_Y position.y
+#define LABEL_X context.contentPosition.x
+#define LABEL_Y context.contentPosition.y
 
 	const uint16_t y = LABEL_Y + i * (LABEL_ROW_HEIGHT + LABEL_ROW_MARGIN);
-	Color decrementColour = DARKBLUE;
-	Color incrementColour = DARKBLUE;
+	Color decrementColour = WHITE;
+	Color incrementColour = WHITE;
 
-	if (mousePosition.y >= y && mousePosition.y <= y + LABEL_ROW_HEIGHT) {
-		if (mousePosition.x >= BUTTON_DEC_X1 && mousePosition.x <= BUTTON_DEC_X2) {
-			decrementColour = BLACK;
+	if (mouse.position.y >= y && mouse.position.y <= y + LABEL_ROW_HEIGHT) {
+		if (mouse.position.x >= BUTTON_DEC_X1 && mouse.position.x <= BUTTON_DEC_X2) {
+			decrementColour = GRAY;
 
-			if (isMousePressed) {
+			if (mouse.isPressed) {
 				--*attribute;
 			}
-		} else if (mousePosition.x >= BUTTON_INC_X1 && mousePosition.x <= BUTTON_INC_X2) {
-			incrementColour = BLACK;
+		} else if (mouse.position.x >= BUTTON_INC_X1 && mouse.position.x <= BUTTON_INC_X2) {
+			incrementColour = GRAY;
 
-			if (isMousePressed) {
+			if (mouse.isPressed) {
 				++*attribute;
 			}
 		}
 	}
 
 	DrawTextEx(font, label, (Vector2){LABEL_X, y + PADDING}, FONT_SIZE, 0, BLACK);
-	DrawRectangle(BUTTON_DEC_X1, y, ARROW_WIDTH, LABEL_ROW_HEIGHT, decrementColour);
+	DrawTexture(context.arrowLeft, BUTTON_DEC_X1, y, decrementColour);
 	DrawRectangle(INPUT_X, y, INPUT_WIDTH, LABEL_ROW_HEIGHT, BLACK);
-	DrawRectangle(BUTTON_INC_X1, y, ARROW_WIDTH, LABEL_ROW_HEIGHT, incrementColour);
+	DrawTexture(context.arrowRight, BUTTON_INC_X1, y, incrementColour);
 	char buf[5];
 	const uint8_t attributeValue = *attribute;
 	snprintf(buf, 4, "%d", attributeValue);
@@ -68,18 +66,16 @@ void drawAttributeInput(
 
 void drawAttributeInputs(
 	const Font font,
-	const PointU16 position,
-	Attributes *attributes,
-	const bool isMousePressed,
-	const Vector2 mousePosition
+	const AttributesContext context,
+	const MouseContext mouse,
+	Attributes *attributes
 ) {
 	uint8_t i = 0;
 
-	// TODO: add icon to buttons
-	drawAttributeInput(font, position, "Strength", &attributes->strength, i++, isMousePressed, mousePosition);
-	drawAttributeInput(font, position, "Dexterity", &attributes->dexterity, i++, isMousePressed, mousePosition);
-	drawAttributeInput(font, position, "Constitution", &attributes->constitution, i++, isMousePressed, mousePosition);
-	drawAttributeInput(font, position, "Intelligence", &attributes->intelligence, i++, isMousePressed, mousePosition);
-	drawAttributeInput(font, position, "Wisdom", &attributes->wisdom, i++, isMousePressed, mousePosition);
-	drawAttributeInput(font, position, "Charisma", &attributes->charisma, i, isMousePressed, mousePosition);
+	drawAttributeInput(font, context, "Strength", &attributes->strength, i++, mouse);
+	drawAttributeInput(font, context, "Dexterity", &attributes->dexterity, i++, mouse);
+	drawAttributeInput(font, context, "Constitution", &attributes->constitution, i++, mouse);
+	drawAttributeInput(font, context, "Intelligence", &attributes->intelligence, i++, mouse);
+	drawAttributeInput(font, context, "Wisdom", &attributes->wisdom, i++, mouse);
+	drawAttributeInput(font, context, "Charisma", &attributes->charisma, i, mouse);
 }

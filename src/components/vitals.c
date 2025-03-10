@@ -14,14 +14,13 @@ void drawClassInput(
 	const Vector2 position,
 	Character *character,
 	const bool isPrimaryClass,
-	const bool isMousePressed,
-	const Vector2 mousePosition
+	const MouseContext mouse
 ) {
 	const char *label = "Level ";
 	DrawTextEx(font, label, position, FONT_SIZE, 0, BLACK);
 
 	char buf[16];
-	const PointU16 mousePoint = {mousePosition.x, mousePosition.y};
+	const PointU16 mousePoint = {mouse.position.x, mouse.position.y};
 	const uint8_t labelWidth = MeasureTextEx(font, label, FONT_SIZE, 0).x;
 
 	uint8_t classIndex1 = getPrimaryClassIndex(*character);
@@ -36,7 +35,7 @@ void drawClassInput(
 		const Vector2 levelPosition = {position.x + labelWidth, position.y};
 		const Vector2 levelSize = MeasureTextEx(font, buf, FONT_SIZE, 0);
 		const RectangleI16 levelRectangle = {levelPosition.x, levelPosition.y, levelSize.x, levelSize.y};
-		if (isMousePressed && isPointIntersecting(mousePoint, levelRectangle)) {
+		if (mouse.isPressed && isPointIntersecting(mousePoint, levelRectangle)) {
 			if (isPrimaryClass) {
 				level1 = level1 < 20 ? level1 + 1 : 1;
 			} else {
@@ -59,7 +58,7 @@ void drawClassInput(
 
 		const Vector2 classSize = MeasureTextEx(font, buf, FONT_SIZE, 0);
 		const RectangleI16 levelRectangle = {classPosition.x, classPosition.y, classSize.x, classSize.y};
-		if (isMousePressed && isPointIntersecting(mousePoint, levelRectangle)) {
+		if (mouse.isPressed && isPointIntersecting(mousePoint, levelRectangle)) {
 			uint8_t c;
 			if (isPrimaryClass) {
 				classIndex1 = classIndex1 < 4 ? classIndex1 + 1 : 0;
@@ -78,26 +77,20 @@ void drawClassInput(
 }
 
 
-void drawVitals(
-	const Font font,
-	const PointU16 position,
-	Character *character,
-	const bool isMousePressed,
-	const Vector2 mousePosition
-) {
+void drawVitals(const Font font, const PointU16 position, const MouseContext mouse, Character *character) {
 #define X position.x
 #define Y position.y
 
 	uint16_t y = 0;
 
-	drawClassInput(font, (Vector2){X, Y + y}, character,true, isMousePressed, mousePosition);
+	drawClassInput(font, (Vector2){X, Y + y}, character,true, mouse);
 	y += LABEL_ROW_HEIGHT;
 
 	{
 		const uint8_t classIndex1 = getPrimaryClassIndex(*character);
 		const Class class1 = classes[classIndex1];
 		if (getCanClassBecomeJedi(class1)) {
-			drawClassInput(font, (Vector2){X, Y + y}, character,false, isMousePressed, mousePosition);
+			drawClassInput(font, (Vector2){X, Y + y}, character,false, mouse);
 			y += LABEL_ROW_HEIGHT;
 		}
 	}

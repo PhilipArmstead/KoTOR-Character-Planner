@@ -73,29 +73,3 @@ typedef struct {
 // 	JEDI_CONSULAR: {
 // 		forcePointsPerLevel: 8,
 // 	},
-// 	MINION: {
-// 		// TODO: merge with Soldier
-// 		name: 'Minion',
-// 		modifier: {
-// 			vitalityPerLevel: 10,
-// 			attackModifierPerLevel: 1,
-// 		},
-// 		saveGrowth: {
-// 			[saveEnum.FORTITUDE]: data2.FAST,
-// 			[saveEnum.REFLEX]: data2.SLOW,
-// 			[saveEnum.WILL]: data2.SLOW,
-// 		},
-// 	},
-// 	SITH_SOLDIER_NEWBIE: {
-// 		name: 'Sith Soldier',
-// 		modifier: {
-// 			vitalityPerLevel: 15,
-// 			attackModifierPerLevel: 1,
-// 		},
-// 		saveGrowth: {
-// 			[saveEnum.FORTITUDE]: data2.FAST,
-// 			[saveEnum.REFLEX]: data2.SLOW,
-// 			[saveEnum.WILL]: data2.SLOW,
-// 		},
-// 	},
-// })
