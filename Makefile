@@ -22,7 +22,7 @@ INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 CC := clang
-CCFLAGS += -std=gnu99 -Wall -Werror -Wno-pointer-sign
+CCFLAGS += -std=c99 -Wall -Werror -Wno-pointer-sign
 LDFLAGS := $(LDFLAGS) -lm -lraylib
 
 # The final build step.
@@ -30,7 +30,7 @@ all:
 	mkdir -p $(BUILD_DIR)
 	$(CC) $(CCFLAGS) $(SRCS) -o $(BUILD_DIR)/$(TARGET_EXEC) $(LDFLAGS)
 
-release: CCFLAGS += -O3
+release: CCFLAGS += -O3 -s
 release: all
 debug: CCFLAGS += -DDEBUG -g -fsanitize=address,undefined
 debug: all
