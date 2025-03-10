@@ -30,12 +30,15 @@ all:
 	mkdir -p $(BUILD_DIR)
 	$(CC) $(CCFLAGS) $(SRCS) -o $(BUILD_DIR)/$(TARGET_EXEC) $(LDFLAGS)
 
-release: CCFLAGS += -O3 -s
+release: CCFLAGS += -O3
 release: all
-debug: CCFLAGS += -DDEBUG -g -fsanitize=address,undefined
+debug: CCFLAGS += -O0 -DDEBUG -g -fsanitize=address,undefined
 debug: all
 release-with-debug: CCFLAGS += -O3 -DDEBUG -g -fsanitize=address,undefined
 release-with-debug: all
+testing: CCFLAGS += -DIS_TESTING=1
+testing: release-with-debug
+testing: all
 
 .PHONY: clean
 clean:

@@ -11,7 +11,6 @@
 
 
 #define IS_BENCHMARKING 0
-#define IS_TESTING 0
 
 #if IS_TESTING
 #include "tests/tests.h"
