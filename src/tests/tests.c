@@ -81,7 +81,7 @@ uint16_t runFeatTests() {
 
 		for (uint8_t level = 1; level <= 20; ++level) {
 			printf("	and they are level %d\n", level);
-			failures += assertUint8(testCase.allowed[level - 1], getFeatAllowance(testClass.data1, level));
+			failures += assertUint8(testCase.allowed[level - 1], getFeatAllowance(testClass.data, level));
 		}
 	}
 
@@ -177,7 +177,7 @@ uint16_t runSkillTests() {
 		for (uint8_t j = 0; j < 6; ++j) {
 			const int8_t modifier = testCase.outcomes[j].modifier;
 			printf("	and Intelligence Modifier is %d\n", modifier);
-			failures += assertUint8(testCase.outcomes[j].expected, getSkillAllowance(testClass.data1, 1, modifier));
+			failures += assertUint8(testCase.outcomes[j].expected, getSkillAllowance(testClass.data, 1, modifier));
 		}
 
 		// Levelling
@@ -187,7 +187,7 @@ uint16_t runSkillTests() {
 		for (uint8_t j = 0; j < 6; ++j) {
 			const int8_t modifier = testCase.outcomes[j].modifier;
 			printf("	and Intelligence Modifier is %d\n", modifier);
-			failures += assertUint8(testCase.outcomes[j].expected, getSkillAllowance(testClass.data1, 2, modifier));
+			failures += assertUint8(testCase.outcomes[j].expected, getSkillAllowance(testClass.data, 2, modifier));
 		}
 	}
 

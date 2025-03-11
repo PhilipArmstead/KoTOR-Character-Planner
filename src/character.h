@@ -30,11 +30,11 @@ inline int8_t getModifier(int16_t attribute) {
 }
 
 inline float getAttackPerLevel(const Class class) {
-	return class.data1 & 128 ? 1 : 0.75;
+	return class.data & 128 ? 1 : 0.75;
 }
 
 inline uint8_t getVitalityPerLevel(const Class class) {
-	const uint8_t value = class.data1 >> 5 & 3;
+	const uint8_t value = class.data >> 5 & 3;
 	if (value == 0) {
 		return 6;
 	}

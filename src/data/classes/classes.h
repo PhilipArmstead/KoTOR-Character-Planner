@@ -48,20 +48,15 @@ typedef struct {
 	 * Attack modifier per level
 	 * --
 	 * Bit 8 must contain 1 if the modifier is linear or 0 if it is level * 0.75
-	*/
-	uint8_t data1;
-	/**
+	 *
 	 * Saves
 	 * --
-	 * Bits 1-2 must contain a SaveGrowthSpeed value representing Fortitude
-	 * Bits 3-4 must contain a SaveGrowthSpeed value representing Reflex
-	 * Bits 5-6 must contain a SaveGrowthSpeed value representing Will
+	 * Bits 9-10 must contain a SaveGrowthSpeed value representing Fortitude
+	 * Bits 11-12 must contain a SaveGrowthSpeed value representing Reflex
+	 * Bits 13-14 must contain a SaveGrowthSpeed value representing Will
 	 *
-	 * Secondary class
-	 * --
-	 * Bit 7 must contain 1 if the class can become a Jedi
 	*/
-	uint8_t data2;
+	uint16_t data;
 } Class;
 
 // 	JEDI_GUARDIAN: {
