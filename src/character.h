@@ -7,12 +7,16 @@
 
 extern const Class classes[CLASS_COUNT];
 
+inline uint8_t getSpecies(const Character character) {
+	return character.data >> 5 & 3;
+}
+
 inline uint8_t getPrimaryClassIndex(const Character character) {
-	return character.classIndices & 7;
+	return character.data & 7;
 }
 
 inline uint8_t getSecondaryClassIndex(const Character character) {
-	return character.classIndices >> 3 & 3;
+	return character.data >> 3 & 3;
 }
 
 inline bool getCanClassBecomeJedi(const Class class) {

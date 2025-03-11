@@ -66,8 +66,7 @@ int main() {
 	UnloadImage(imageArrowRight);
 
 	Character character = {
-		.classIndices = 0,
-		//.classIndices = 0 << 3 | 0,
+		.data = 0 << 3 | 0,
 		.level1 = 1,
 		.level2 = 0,
 		.attributes = {10, 10, 10, 10, 10, 10}
@@ -121,4 +120,3 @@ int main() {
 // TODO: choose force powers
 // TODO: show forms in tabs
 // TODO: add keyboard support
-// TODO: select species for specific feats

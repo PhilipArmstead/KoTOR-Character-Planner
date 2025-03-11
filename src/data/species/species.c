@@ -1,11 +1,7 @@
 #include "species.h"
 
 
-const Species species[SPECIES_COUNT] = {
-    (Species){
-        .name = "Droid",
-        .classes = {3, 4, -1},
-    },
+const Species speciesList[SPECIES_COUNT] = {
     (Species){
         .name = "Humanoid",
         .classes = {0, 1, 2},
@@ -13,6 +9,10 @@ const Species species[SPECIES_COUNT] = {
     (Species){
         .name = "Wookie",
         .classes = {1, -1},
+    },
+    (Species){
+        .name = "Droid",
+        .classes = {3, 4, -1},
     },
     (Species){
         .name = "Jedi",

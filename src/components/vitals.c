@@ -5,7 +5,43 @@
 #include "../character.h"
 #include "../types.h"
 #include "../utility.h"
+#include "../data/species/species.h"
 
+
+extern const Species speciesList[SPECIES_COUNT];
+
+void drawSpeciesInput(const Font font, const Vector2 position, Character *character, const MouseContext mouse) {
+	const char *label = "Species: ";
+	DrawTextEx(font, label, position, FONT_SIZE, 0, BLACK);
+
+
+	char buf[10];
+	enum Species speciesIndex = getSpecies(*character);
+	Species species = speciesList[speciesIndex];
+	snprintf(buf, 10, "%s", species.name);
+
+	const uint8_t labelWidth = (uint8_t)MeasureTextEx(font, label, FONT_SIZE, 0).x;
+	const Vector2 speciesPosition = {position.x + (float)labelWidth, position.y};
+	const Vector2 speciesSize = MeasureTextEx(font, buf, FONT_SIZE, 0);
+	const RectangleI16 levelRectangle = {
+		(int16_t)speciesPosition.x,
+		(int16_t)speciesPosition.y,
+		(int16_t)speciesSize.x,
+		(int16_t)speciesSize.y
+	};
+	const PointU16 mousePoint = {mouse.position.x, mouse.position.y};
+
+	if (mouse.isPressed && isPointIntersecting(mousePoint, levelRectangle)) {
+		if (++speciesIndex >= SPECIES_COUNT - 1) {
+			speciesIndex = 0;
+		}
+		character->data = speciesIndex << 5 | (character->data & 31);
+		species = speciesList[getSpecies(*character)];
+	}
+
+	snprintf(buf, 10, "%s", species.name);
+	DrawTextEx(font, buf, speciesPosition, FONT_SIZE, 0, BLACK);
+}
 
 void drawClassInput(
 	const Font font,
@@ -17,13 +53,13 @@ void drawClassInput(
 	const char *label = "Level ";
 	DrawTextEx(font, label, position, FONT_SIZE, 0, BLACK);
 
-	char buf[16];
-	const PointU16 mousePoint = {mouse.position.x, mouse.position.y};
-	const uint8_t labelWidth = (uint8_t)MeasureTextEx(font, label, FONT_SIZE, 0).x;
-
 	uint8_t classIndex1 = getPrimaryClassIndex(*character);
 	uint8_t classIndex2 = getSecondaryClassIndex(*character);
 	Class class = classes[isPrimaryClass ? classIndex1 : classIndex2 + INDEX_JEDI_START];
+
+	char buf[16];
+	const uint8_t labelWidth = (uint8_t)MeasureTextEx(font, label, FONT_SIZE, 0).x;
+	const PointU16 mousePoint = {mouse.position.x, mouse.position.y};
 
 	// Level number
 	{
@@ -75,7 +111,7 @@ void drawClassInput(
 				classIndex2 = classIndex2 < 2 ? classIndex2 + 1 : 0;
 				c = classIndex2 + INDEX_JEDI_START;
 			}
-			character->classIndices = classIndex2 << 3 | classIndex1;
+			character->data = classIndex2 << 3 | classIndex1;
 			class = classes[c];
 		}
 
@@ -90,6 +126,9 @@ void drawVitals(const Font font, const PointU16 position, const MouseContext mou
 #define Y position.y
 
 	uint16_t y = 0;
+
+	drawSpeciesInput(font, (Vector2){X, Y + y}, character, mouse);
+	y += LABEL_ROW_HEIGHT;
 
 	drawClassInput(font, (Vector2){X, Y + y}, character,true, mouse);
 	y += LABEL_ROW_HEIGHT;
@@ -118,4 +157,5 @@ void drawVitals(const Font font, const PointU16 position, const MouseContext mou
 	y += LABEL_ROW_HEIGHT;
 
 	// TODO: force points, main/off hand attacks, saves, resistances
+	// TODO: limit classes by species
 }

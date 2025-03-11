@@ -19,10 +19,16 @@ typedef struct {
 typedef struct {
 	Attributes attributes;
 	/**
+	 * Class
+	 * ---
 	 * Bits 1-3 must contain a number 0-5, representing a non-Jedi class index
 	 * Bits 4-5 must contain a number 1-3, representing a Jedi class index
+	 *
+	 * Species
+	 * ---
+	 * Bits 6-7 must contain a number 0-2, representing a species (humanoid/wookie/droid)
 	 */
-	uint8_t classIndices;
+	uint8_t data;
 	uint8_t level1;
 	uint8_t level2;
 } Character;
