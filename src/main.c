@@ -66,9 +66,7 @@ int main() {
 	UnloadImage(imageArrowRight);
 
 	Character character = {
-		.data = 0 << 3 | 0,
 		.level1 = 1,
-		.level2 = 0,
 		.attributes = {10, 10, 10, 10, 10, 10}
 	};
 	while (true) {

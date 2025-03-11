@@ -16,7 +16,7 @@ void drawSpeciesInput(const Font font, const Vector2 position, Character *charac
 
 
 	char buf[10];
-	enum Species speciesIndex = getSpecies(*character);
+	enum Species speciesIndex = getSpecies(character);
 	Species species = speciesList[speciesIndex];
 	snprintf(buf, 10, "%s", species.name);
 
@@ -36,7 +36,7 @@ void drawSpeciesInput(const Font font, const Vector2 position, Character *charac
 			speciesIndex = 0;
 		}
 		character->data = speciesIndex << 5 | (character->data & 31);
-		species = speciesList[getSpecies(*character)];
+		species = speciesList[getSpecies(character)];
 	}
 
 	snprintf(buf, 10, "%s", species.name);
@@ -53,9 +53,11 @@ void drawClassInput(
 	const char *label = "Level ";
 	DrawTextEx(font, label, position, FONT_SIZE, 0, BLACK);
 
-	uint8_t classIndex1 = getPrimaryClassIndex(*character);
-	uint8_t classIndex2 = getSecondaryClassIndex(*character);
-	Class class = classes[isPrimaryClass ? classIndex1 : classIndex2 + INDEX_JEDI_START];
+	const uint8_t speciesIndex = getSpecies(character);
+	const int8_t *allowedClasses = speciesList[isPrimaryClass ? speciesIndex : SPECIES_JEDI].classes;
+	uint8_t classIndex1 = getPrimaryClassIndex(character);
+	uint8_t classIndex2 = getSecondaryClassIndex(character);
+	Class class = classes[allowedClasses[isPrimaryClass ? classIndex1 : classIndex2]];
 
 	char buf[16];
 	const uint8_t labelWidth = (uint8_t)MeasureTextEx(font, label, FONT_SIZE, 0).x;
@@ -105,14 +107,17 @@ void drawClassInput(
 		if (mouse.isPressed && isPointIntersecting(mousePoint, levelRectangle)) {
 			uint8_t c;
 			if (isPrimaryClass) {
-				classIndex1 = classIndex1 < 4 ? classIndex1 + 1 : 0;
+				++classIndex1;
+				if (classIndex1 >= 3 || allowedClasses[classIndex1] == -1) {
+					classIndex1 = 0;
+				}
 				c = classIndex1;
 			} else {
 				classIndex2 = classIndex2 < 2 ? classIndex2 + 1 : 0;
-				c = classIndex2 + INDEX_JEDI_START;
+				c = classIndex2;
 			}
-			character->data = classIndex2 << 3 | classIndex1;
-			class = classes[c];
+			character->data = speciesIndex << 5 | classIndex2 << 3 | classIndex1;
+			class = classes[allowedClasses[c]];
 		}
 
 		snprintf(buf, 16, "%s", class.name);
@@ -127,16 +132,37 @@ void drawVitals(const Font font, const PointU16 position, const MouseContext mou
 
 	uint16_t y = 0;
 
+	const enum Species currentSpecies = getSpecies(character);
 	drawSpeciesInput(font, (Vector2){X, Y + y}, character, mouse);
+	const enum Species newSpecies = getSpecies(character);
+
+	if (currentSpecies != newSpecies) {
+		// If species has just changed, check our class is still valid
+		const uint8_t classIndex1 = getPrimaryClassIndex(character);
+		const int8_t *oldClasses = speciesList[currentSpecies].classes;
+		const int8_t *allowedClasses = speciesList[newSpecies].classes;
+		uint8_t newClassIndex = 0;
+		for (uint8_t i = 0; i < 3; ++i) {
+			if (allowedClasses[i] == -1) {
+				break;
+			}
+
+			if (allowedClasses[i] == oldClasses[classIndex1]) {
+				newClassIndex = i;
+				break;
+			}
+		}
+
+		const uint8_t classIndex2 = getSecondaryClassIndex(character);
+		character->data = newSpecies << 5 | classIndex2 << 3 | newClassIndex;
+	}
 	y += LABEL_ROW_HEIGHT;
 
 	drawClassInput(font, (Vector2){X, Y + y}, character,true, mouse);
 	y += LABEL_ROW_HEIGHT;
 
 	{
-		const uint8_t classIndex1 = getPrimaryClassIndex(*character);
-		const Class class1 = classes[classIndex1];
-		if (getCanClassBecomeJedi(class1)) {
+		if (getCanClassBecomeJedi(character)) {
 			drawClassInput(font, (Vector2){X, Y + y}, character,false, mouse);
 			y += LABEL_ROW_HEIGHT;
 		}
@@ -146,7 +172,7 @@ void drawVitals(const Font font, const PointU16 position, const MouseContext mou
 
 	char buf[5];
 
-	snprintf(buf, 5, "%d", getVitality(*character));
+	snprintf(buf, 5, "%d", getVitality(character));
 	DrawTextEx(font, "Vitality:", (Vector2){X, Y + y}, FONT_SIZE, 0, BLACK);
 	DrawTextEx(font, buf, (Vector2){X + 75, Y + 1 + y}, FONT_SIZE, 0, BLACK);
 	y += LABEL_ROW_HEIGHT;
@@ -157,5 +183,4 @@ void drawVitals(const Font font, const PointU16 position, const MouseContext mou
 	y += LABEL_ROW_HEIGHT;
 
 	// TODO: force points, main/off hand attacks, saves, resistances
-	// TODO: limit classes by species
 }

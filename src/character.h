@@ -3,24 +3,25 @@
 #include "character.h"
 #include "types.h"
 #include "data/classes/classes.h"
+#include "data/species/species.h"
 
 
 extern const Class classes[CLASS_COUNT];
 
-inline uint8_t getSpecies(const Character character) {
-	return character.data >> 5 & 3;
+inline uint8_t getSpecies(const Character *character) {
+	return character->data >> 5 & 3;
 }
 
-inline uint8_t getPrimaryClassIndex(const Character character) {
-	return character.data & 7;
+inline uint8_t getPrimaryClassIndex(const Character *character) {
+	return character->data & 7;
 }
 
-inline uint8_t getSecondaryClassIndex(const Character character) {
-	return character.data >> 3 & 3;
+inline uint8_t getSecondaryClassIndex(const Character *character) {
+	return character->data >> 3 & 3;
 }
 
-inline bool getCanClassBecomeJedi(const Class class) {
-	return (class.data2 & 64) > 0;
+inline bool getCanClassBecomeJedi(const Character *character) {
+	return getSpecies(character) == SPECIES_HUMANOID;
 }
 
 inline int8_t getModifier(int16_t attribute) {
@@ -86,12 +87,12 @@ inline uint8_t getDefence(const uint8_t dexterity) {
 // 	// return Math.floor(attackBonus.total + attackBonusPerLevel.total),
 // }
 
-inline uint16_t getVitality(const Character character) {
+inline uint16_t getVitality(const Character *character) {
 	const Class class1 = classes[getPrimaryClassIndex(character)];
 	const Class class2 = classes[getSecondaryClassIndex(character)];
-	const uint8_t level1 = character.level1;
-	const uint8_t level2 = character.level2 * getCanClassBecomeJedi(class1);
-	float vitality = getModifier(character.attributes.constitution) * (level1 + level2);
+	const uint8_t level1 = character->level1;
+	const uint8_t level2 = character->level2 * getCanClassBecomeJedi(character);
+	float vitality = getModifier(character->attributes.constitution) * (level1 + level2);
 
 	vitality += getVitalityPerLevel(class1) * level1;
 	vitality += getVitalityPerLevel(class2) * level2;

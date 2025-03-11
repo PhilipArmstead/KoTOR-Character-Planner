@@ -8,6 +8,8 @@
 #define CLASS_COUNT 8
 
 typedef struct {
+	// TODO: only allow 0-14 per attribute (8-22)
+	//  and compress these in to half as many bytes
 	uint8_t strength;
 	uint8_t dexterity;
 	uint8_t constitution;
