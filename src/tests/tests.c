@@ -17,6 +17,92 @@ bool assertUint8(const uint8_t expected, const uint8_t actual) {
 	return true;
 }
 
+uint16_t runAttributesTests() {
+	uint8_t failures = 0;
+	printf("\nAttributes tests\n===\n");
+
+	typedef struct {
+		uint8_t attribute;
+		int8_t expectedModifier;
+	} TestCase;
+
+	const TestCase testCases[] = {
+		{
+			8,
+			-1
+		},
+		{
+			9,
+			-1
+		},
+		{
+			10,
+			0
+		},
+		{
+			11,
+			0
+		},
+		{
+			12,
+			1
+		},
+		{
+			13,
+			1
+		},
+		{
+			14,
+			2
+		},
+		{
+			15,
+			2
+		},
+		{
+			16,
+			3
+		},
+		{
+			17,
+			3
+		},
+		{
+			18,
+			4
+		},
+		{
+			19,
+			4
+		},
+		{
+			20,
+			5
+		},
+		{
+			21,
+			5
+		},
+		{
+			22,
+			6
+		},
+		{
+			23,
+			6
+		},
+	};
+
+	for (uint8_t i = 0; i < 16; ++i) {
+		printf("- When we have an attribute value of %d\n", testCases[i].attribute);
+		const Character character = {.attributes = {testCases[i].attribute}};
+
+		failures += assertUint8(testCases[i].expectedModifier, getModifier(character.attributes.strength));
+	}
+
+	return failures;
+}
+
 uint16_t runSpeciesTests() {
 	uint8_t failures = 0;
 	printf("\nSpecies tests\n===\n");
