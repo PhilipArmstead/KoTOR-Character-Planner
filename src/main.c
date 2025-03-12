@@ -26,6 +26,7 @@ int main() {
 
 	failures += runFeatTests();
 	failures += runSkillTests();
+	failures += runSpeciesTests();
 
 	if (failures) {
 		printf("\n Error: encountered %d test failures\n", failures);

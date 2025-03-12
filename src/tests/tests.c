@@ -6,8 +6,6 @@
 #include "../data/classes/classes.h"
 
 
-extern const Class classes[CLASS_COUNT];
-
 bool assertUint8(const uint8_t expected, const uint8_t actual) {
 	printf("should be %d ", expected);
 	if (expected == actual) {
@@ -17,6 +15,44 @@ bool assertUint8(const uint8_t expected, const uint8_t actual) {
 
 	printf("but received %d x\n", actual);
 	return true;
+}
+
+uint16_t runSpeciesTests() {
+	uint8_t failures = 0;
+	printf("\nSpecies tests\n===\n");
+
+	typedef struct {
+		uint8_t data;
+		uint8_t expected;
+	} TestCase;
+
+	const TestCase testCases[] = {
+		{
+			0,
+			0
+		},
+		{
+			32,
+			1
+		},
+		{
+			64,
+			2
+		},
+		{
+			96,
+			3
+		},
+	};
+
+	for (uint8_t i = 0; i < 4; ++i) {
+		printf("- When we have a data value of %d\n", testCases[i].data);
+		Character character = {.data = testCases[i].data};
+
+		failures += assertUint8(testCases[i].expected, getSpecies(&character));
+	}
+
+	return failures;
 }
 
 uint16_t runFeatTests() {
@@ -29,8 +65,7 @@ uint16_t runFeatTests() {
 		uint8_t allowed[20];
 	} TestCase;
 
-#define TEST_CASE_COUNT 8
-	const TestCase testCases[TEST_CASE_COUNT] = {
+	const TestCase testCases[] = {
 		{
 			"Soldier",
 			0,
@@ -73,7 +108,7 @@ uint16_t runFeatTests() {
 		},
 	};
 
-	for (uint8_t i = 0; i < TEST_CASE_COUNT; ++i) {
+	for (uint8_t i = 0; i < 8; ++i) {
 		const Class testClass = classes[testCases[i].index];
 		const TestCase testCase = testCases[i];
 
@@ -105,8 +140,7 @@ uint16_t runSkillTests() {
 		TestSuite tests[2];
 	} TestCase;
 
-#define TEST_CASE_COUNT 8
-	const TestCase testCases[TEST_CASE_COUNT] = {
+	const TestCase testCases[] = {
 		{
 			0,
 			{
@@ -165,7 +199,7 @@ uint16_t runSkillTests() {
 		},
 	};
 
-	for (uint8_t i = 0; i < TEST_CASE_COUNT; ++i) {
+	for (uint8_t i = 0; i < 8; ++i) {
 		const Class testClass = classes[testCases[i].index];
 
 		const TestSuite *suite = testCases[i].tests;
