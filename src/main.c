@@ -25,6 +25,7 @@ int main() {
 	uint16_t failures = 0;
 
 	failures += runAttributesTests();
+	failures += runClassTests();
 	failures += runFeatTests();
 	failures += runSkillTests();
 	failures += runSpeciesTests();

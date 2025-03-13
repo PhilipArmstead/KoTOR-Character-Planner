@@ -4,6 +4,7 @@
 
 
 uint16_t runAttributesTests();
+uint16_t runClassTests();
 uint16_t runFeatTests();
 uint16_t runSkillTests();
 uint16_t runSpeciesTests();

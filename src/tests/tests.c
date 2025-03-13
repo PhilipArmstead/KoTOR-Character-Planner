@@ -17,6 +17,17 @@ bool assertUint8(const uint8_t expected, const uint8_t actual) {
 	return true;
 }
 
+bool assertInt8(const int8_t expected, const int8_t actual) {
+	printf("should be %d ", expected);
+	if (expected == actual) {
+		printf("✓\n");
+		return false;
+	}
+
+	printf("but received %d x\n", actual);
+	return true;
+}
+
 uint16_t runAttributesTests() {
 	uint8_t failures = 0;
 	printf("\nAttributes tests\n===\n");
@@ -27,77 +38,55 @@ uint16_t runAttributesTests() {
 	} TestCase;
 
 	const TestCase testCases[] = {
-		{
-			8,
-			-1
-		},
-		{
-			9,
-			-1
-		},
-		{
-			10,
-			0
-		},
-		{
-			11,
-			0
-		},
-		{
-			12,
-			1
-		},
-		{
-			13,
-			1
-		},
-		{
-			14,
-			2
-		},
-		{
-			15,
-			2
-		},
-		{
-			16,
-			3
-		},
-		{
-			17,
-			3
-		},
-		{
-			18,
-			4
-		},
-		{
-			19,
-			4
-		},
-		{
-			20,
-			5
-		},
-		{
-			21,
-			5
-		},
-		{
-			22,
-			6
-		},
-		{
-			23,
-			6
-		},
+		{8, -1},
+		{9, -1},
+		{10, 0},
+		{11, 0},
+		{12, 1},
+		{13, 1},
+		{14, 2},
+		{15, 2},
+		{16, 3},
+		{17, 3},
+		{18, 4},
+		{19, 4},
+		{20, 5},
+		{21, 5},
+		{22, 6},
+		{23, 6},
 	};
 
 	for (uint8_t i = 0; i < 16; ++i) {
 		printf("- When we have an attribute value of %d\n", testCases[i].attribute);
 		const Character character = {.attributes = {testCases[i].attribute}};
 
-		failures += assertUint8(testCases[i].expectedModifier, getModifier(character.attributes.strength));
+		failures += assertInt8(testCases[i].expectedModifier, getModifier(character.attributes.strength));
+	}
+
+	return failures;
+}
+
+uint16_t runClassTests() {
+	uint8_t failures = 0;
+	printf("\nClass tests\n===\n");
+
+	typedef struct {
+		uint8_t data;
+		bool canBecomeJedi;
+	} TestCase;
+
+	const TestCase testCases[] = {
+		{0,true},
+		{32,false},
+		{64,false},
+		{96,false},
+	};
+
+	for (uint8_t i = 0; i < 4; ++i) {
+		printf("- When we have character data of %d\n", testCases[i].data);
+		const Character character = {.data = testCases[i].data};
+
+		failures += assertUint8(testCases[i].canBecomeJedi, getCanClassBecomeJedi(&character));
 	}
 
 	return failures;
@@ -113,22 +102,10 @@ uint16_t runSpeciesTests() {
 	} TestCase;
 
 	const TestCase testCases[] = {
-		{
-			0,
-			0
-		},
-		{
-			32,
-			1
-		},
-		{
-			64,
-			2
-		},
-		{
-			96,
-			3
-		},
+		{0, 0},
+		{32, 1},
+		{64, 2},
+		{96, 3},
 	};
 
 	for (uint8_t i = 0; i < 4; ++i) {
